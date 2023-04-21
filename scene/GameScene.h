@@ -9,19 +9,14 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "DebugCamera.h"
+#include "player.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
 class GameScene {
-	Model* model_ = nullptr;
-	WorldTransform worldtransform_;
-	ViewProjection viewprojection_;
-	//サウンドデータハンドル
-	uint32_t soundDateHandle_ = 0;
-	uint32_t voichandle_ = 0;
-	float inputfloat3[3] = {0, 0, 0};
-	//デバックカメラ
-	DebugCamera* debugcamera_ = nullptr;
+	player* player_ = nullptr;
+	
+	
 
 public: // メンバ関数
 	/// <summary>
