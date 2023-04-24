@@ -27,12 +27,12 @@ void GameScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-	textureHandle_ = TextureManager::Load("debugfont.png");
+	textureHandle_ = TextureManager::Load("ga.png");
 	//モデル
 	
 	viewProjection_.Initialize();
 	model_ = Model::Create();
-	sprite_ = Sprite::Create(textureHandle_, {640, 360});
+	sprite_ = Sprite::Create(textureHandle_, {350, 20});
 	// 自キャラの編成
 	player_ = new player();
 	// 自キャラの初期化
