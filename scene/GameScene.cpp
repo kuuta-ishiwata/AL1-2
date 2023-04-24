@@ -29,13 +29,14 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("debugfont.png");
 	//モデル
-	viewProjection_Initialize)();
-	model_ = Model::Createe();
-	sprite_ = Sprite::Create(textureHandle_, {100, 50});
+	
+	viewProjection_.Initialize();
+	model_ = Model::Create();
+	sprite_ = Sprite::Create(textureHandle_, {640, 360});
 	// 自キャラの編成
 	player_ = new player();
 	// 自キャラの初期化
-	player_->Initiakize();
+	//player_->Initiakize();
 
 	
 
@@ -48,7 +49,6 @@ void GameScene::Update() {
 }
 
 void GameScene::Draw() {
-	player_->Draw();
 	
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();

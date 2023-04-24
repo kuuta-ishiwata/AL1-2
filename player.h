@@ -1,42 +1,31 @@
-#pragma once
+ï»¿#pragma once
 #include "Model.h"
 #include "PrimitiveDrawer.h"
 #include "WorldTransform.h"
 #include <assert.h>
+
 class player {
 
 public:
 	//<summary>
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	//<summary>
-	void Initiakize(Model* model,uint32_t textureHandle)
-	{
-		//ˆø”‚©‚çó‚¯æ‚Á‚½ƒ‚ƒfƒ‹‚ª“Ç‚İ‚Ü‚ê‚¢‚é‚©ƒ`ƒFƒN
-		assert(model);
-		//ˆø”‚©‚çƒ‚ƒfƒ‹‚ÆƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹‚ğó‚¯æ‚é
-		model_  = model;
-		textureHandle_ = textureHandle;
-		//ƒ|ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH|ƒ€‰Šú‰»
-		worldtransform_.Initialize();
-	}
+	void Initiakize(Model* model, uint32_t textureHandle);
 	//<summary>
-	// XV
+	// æ›´æ–°
 	//<summary>
-	void update() {
+	void update();
 
-	}
 	//<summary>
-	// •`‰æ
+	// æç”»
 	////<summary>
-	void Draw(ViewProjection& viewprojection) {
-		model_->Draw(worldTransform_, viewProjection, textureHandle_);
-	}
+	void Draw(ViewProjection& viewprojection);
 
 private:
-	// ƒ|ƒ‹ƒh•ÏXƒf[ƒ^
+	// ãƒ¯ï¼ãƒ«ãƒ‰å¤‰æ›´ãƒ‡ãƒ¼ã‚¿
 	WorldTransform worldtransform_;
-	// ƒ‚ƒfƒ‹
+	// ãƒ¢ãƒ‡ãƒ«
 	Model* model_ = nullptr;
-	// ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
-	uint32_t textureHandle_ = ;
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«
+	uint32_t textureHandle_ = 0u;
 };
