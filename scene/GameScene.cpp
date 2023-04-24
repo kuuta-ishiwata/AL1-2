@@ -18,6 +18,7 @@ GameScene::~GameScene()
 	// デストラクタ
 	delete sprite_;
 	delete player_;
+	delete model_;
 }
 
 
@@ -27,20 +28,23 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("debugfont.png");
+	//モデル
+	viewProjection_Initialize)();
+	model_ = Model::Createe();
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
 	// 自キャラの編成
 	player_ = new player();
 	// 自キャラの初期化
 	player_->Initiakize();
 
-
-
+	
 
 }
 
 void GameScene::Update() { 
 	// 自キャラの更新
 	player_->update();
+
 }
 
 void GameScene::Draw() {

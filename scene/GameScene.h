@@ -19,6 +19,9 @@ class GameScene {
 	
 
 public: // メンバ関数
+
+
+	
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
@@ -51,6 +54,14 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	uint32_t textureHandle_ = 0;
 	Sprite* sprite_ = nullptr;
+	//スプライト
+
+	uint32_texHandle_ = 0; 
+	//モデル
+	Model* model_;
+	//カメラ
+	ViewProjection viewProjection_;
+
 
 	/// <summary>
 	/// ゲームシーン用

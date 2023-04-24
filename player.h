@@ -28,7 +28,9 @@ public:
 	//<summary>
 	// 描画
 	////<summary>
-	void Draw();
+	void Draw(ViewProjection& viewprojection) {
+		model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	}
 
 private:
 	// ワ－ルド変更データ
