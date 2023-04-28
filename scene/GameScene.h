@@ -15,7 +15,7 @@
 /// </summary>
 class GameScene {
 	
-	//自キャラ
+	//自キャラr
 	player* player_ = nullptr;
 
 public: // メンバ関数
