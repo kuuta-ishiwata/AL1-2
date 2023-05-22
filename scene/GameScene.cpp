@@ -4,21 +4,27 @@
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "AxisIndicator.h"
+#include <ImGuiManager.h>
+#include "AxisIndicator.h"
 
 GameScene::GameScene() 
 {
 	// デストラクタ
 	delete sprite_;
 	delete player_;
+	delete debugCamera_;
 
 }
 
+
 GameScene::~GameScene() 
 {
+
 	// デストラクタ
 	delete sprite_;
 	delete player_;
 	delete model_;
+
 }
 
 
@@ -34,17 +40,50 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 	sprite_ = Sprite::Create(textureHandle_, {350, 20});
 	// 自キャラの編成
-	player_ = new player();
+	player_ = new Player();
 	// 自キャラの初期化
-	//player_->Initiakize();
+	player_->Initialize(model_, textureHandle_);
+	//デバックカメラの生成
+	debugCamera_ = new DebugCamera(1280, 720);
+	//軸方向表示の表示を有効にする
+	AxisIndicator::GetInstance()->SetVisible(true);
+	//軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
-	
 
 }
 
 void GameScene::Update() { 
 	// 自キャラの更新
-	player_->update();
+	player_->Update();
+
+	ImGui::InputFloat3("InputFloat3", inputFloat3);
+	ImGui::SliderFloat3("SliderFloat3", inputFloat3, 0.0f, 1.0f);
+	debugCamera_->Update();	
+	
+#ifdef  _DEBUG
+
+	if (input_->TriggerKey(DIK_M))
+	{
+		isDebugCameraActive_ = true;
+    }
+
+#endif //  
+
+
+	if (isDebugCameraActive_) 
+	{
+	
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		//ビュープロジェクション行列の転送
+		viewProjection_.TransferMatrix();
+	
+	} else {
+	
+	//ビュープロジェクション行列の更新と転送
+		viewProjection_.UpdateMatrix();
+	}
 
 }
 
@@ -71,11 +110,12 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 
-	
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
+	player_->Draw(viewProjection_);
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -83,14 +123,15 @@ void GameScene::Draw() {
 
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
+
 	Sprite::PreDraw(commandList);
 
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
+	//sprite_->Draw();
 	// スプライト描画後処理
-	Sprite::PostDraw();
+	 Sprite::PostDraw();
 
 #pragma endregion
 }

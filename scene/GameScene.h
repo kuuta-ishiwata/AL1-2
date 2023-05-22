@@ -16,7 +16,14 @@
 class GameScene {
 	
 	//自キャラr
-	player* player_ = nullptr;
+	//player* player_ = nullptr;
+
+	float inputFloat3[3] = {0, 0, 0};
+
+	bool isDebugCameraActive_ = false; 
+
+	//デバックカメラ
+	DebugCamera* debugCamera_ = nullptr;
 
 public: // メンバ関数
 	/// <summary>
@@ -47,6 +54,7 @@ public: // メンバ関数
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
+
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	Sprite* sprite_ = nullptr;
@@ -56,7 +64,8 @@ private: // メンバ変数
 	Model* model_;
 	//カメラ
 	ViewProjection viewProjection_;
-
+	Player* player_ = nullptr;
+	WorldTransform worldtransform_;
 
 	/// <summary>
 	/// ゲームシーン用
