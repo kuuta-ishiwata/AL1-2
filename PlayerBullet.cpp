@@ -2,8 +2,10 @@
 #include <assert.h>
 #include "WorldTransform.h"
 #include <ImGuiManager.h>
+#include "MATHEX.h"
 
-void PlayerBullet::Initialize(Model* model, const Vector3& position)
+
+void PlayerBullet::Initialize(Model* model, const Vector3& position, const Vector3 velocity)
 { 
 	
 	assert(model);
@@ -16,6 +18,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position)
 	worldtransform_.Initialize();
 	worldtransform_.translation_ = position;
 
+	velocity_ = velocity;
 
 }
 
@@ -23,6 +26,13 @@ void PlayerBullet::Update()
 { 
 	
 	worldtransform_.UpdateMatrix();
+
+	worldtransform_.translation_=  Add(worldtransform_.translation_,velocity_);
+
+	if (--deathTimer_ <= 0)
+	{
+		isDead_ = true;
+	}
 
 }
 

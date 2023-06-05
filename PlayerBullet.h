@@ -15,14 +15,22 @@ public:
 	/// <param name= "model">モデル</param>
 	/// <param name = "position">初期化座標</param>
 	
-	void Initialize(Model* model, const Vector3& position);
+	void Initialize(Model* model, const Vector3& position, const Vector3 velocity);
 	
 
 	///<summary>
 	///更新
 	/// </summary>
 	void Update();
+	// 寿命
+	static const int32_t kLifeTime = 60 * 5;
 
+	// デスタイマー
+	int32_t deathTimer_ = kLifeTime;
+	// デスフラグ
+	bool isDead_ = false;
+
+	bool IsDead() const { return isDead_; }
 
 	///<summary>
 	//描画
@@ -41,6 +49,10 @@ public:
 
 	uint32_t bullettextureHandle_ = 0u;
 	Input* input_ = nullptr;
+	
+	//速度
+	Vector3 velocity_;
+
 	
 	
 };
