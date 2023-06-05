@@ -20,7 +20,11 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	worldtransform_.Initialize();
 	input_ = Input::GetInstance();
 
-	
+	//bulletの解放
+	for (PlayerBullet* bullet : bullets_)
+	{
+		delete bullet;
+	}
 }
 
 
@@ -29,18 +33,24 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 void Player::Attack(Vector3& position)
 {
 	if (input_->PushKey(DIK_SPACE))
-	{   //弾があれば解放
+	{   
+		
+		//弾があれば解放
+		/*
 		if (bullet_)
 		{
 			delete bullet_;
 			bullet_ = nullptr;
 		}
-
+		*/
 		// 弾を生成し初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_,position);
+
 		// 弾を登録
-		bullet_ = newBullet;
+		//bullet_ = newBullet;
+		bullets_.push_back(newBullet);
+
 	}
 
 }
@@ -113,10 +123,17 @@ void Player::Update() {
 	 Attack(worldtransform_.translation_);
 
 	 //弾更新
-	 if (bullet_)
+	 /*
+	 if (bullet_) 
 	 {
 		bullet_->Update();
 	 }
+	 */
+	 for (PlayerBullet* bullet : bullets_ ) 
+	 {
+		bullet->Update();
+	 }
+	 
 	 //ワールドトランスフォームの更新
 	
 
@@ -146,11 +163,12 @@ void Player::Draw(ViewProjection& viewprojection) {
 	 model_->Draw(worldtransform_, viewprojection, textureHandle_);
 
 	 // 弾描画
-	 if (bullet_)
+	 
+	 for (PlayerBullet* bullet : bullets_)
 	 {
-		bullet_->Draw(viewprojection);
+		bullet->Draw(viewprojection);
 	 }
-
+	 
 }
 
 

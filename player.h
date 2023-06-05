@@ -5,6 +5,8 @@
 #include <assert.h>
 #include <Input.h>
 #include<PlayerBullet.h>
+#include <list>
+
 
 class Player {
 
@@ -15,7 +17,11 @@ public:
 
 	void Initialize(Model* model, uint32_t textureHandle);
 
-	//~Player();
+
+	/// <summary>
+	///  デストラクタ
+	/// </summary>
+	~Player(){};
 
 	//<summary>
 	// 更新
@@ -32,7 +38,7 @@ public:
 /// </summary>
 
 	void Attack(Vector3 &position);
-
+	
 
 private:
 	// ワ－ルド変更データ
@@ -53,4 +59,6 @@ private:
 	//弾
 	 PlayerBullet* bullet_ = nullptr;
 	
+	std::list<PlayerBullet*> bullets_;
+
 };
