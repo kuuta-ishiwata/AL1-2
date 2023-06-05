@@ -15,6 +15,8 @@ public:
 
 	void Initialize(Model* model, uint32_t textureHandle);
 
+	//~Player();
+
 	//<summary>
 	// 更新
 	//<summary>

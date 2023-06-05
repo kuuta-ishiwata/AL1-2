@@ -29,7 +29,13 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 void Player::Attack(Vector3& position)
 {
 	if (input_->PushKey(DIK_SPACE))
-	{
+	{   //弾があれば解放
+		if (bullet_)
+		{
+			delete bullet_;
+			bullet_ = nullptr;
+		}
+
 		// 弾を生成し初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_,position);
