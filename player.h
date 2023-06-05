@@ -4,6 +4,7 @@
 #include "WorldTransform.h"
 #include <assert.h>
 #include <Input.h>
+#include<PlayerBullet.h>
 
 class Player {
 
@@ -11,6 +12,7 @@ public:
 	//<summary>
 	// 初期化
 	//<summary>
+
 	void Initialize(Model* model, uint32_t textureHandle);
 
 	//<summary>
@@ -22,6 +24,13 @@ public:
 	// 描画
 	////<summary>
 	void Draw(ViewProjection& viewprojection);
+
+/// <summary>
+/// 攻撃
+/// </summary>
+
+	void Attack(Vector3 &position);
+
 
 private:
 	// ワ－ルド変更データ
@@ -35,4 +44,11 @@ private:
 
 	Input* input_ = nullptr;
 
+
+	//uint32_t* position_ = nullptr;
+
+
+	//弾
+	 PlayerBullet* bullet_ = nullptr;
+	
 };

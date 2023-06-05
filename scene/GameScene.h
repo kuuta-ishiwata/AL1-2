@@ -10,20 +10,12 @@
 #include "WorldTransform.h"
 #include "DebugCamera.h"
 #include "Player.h"
+#include "PlayerBullet.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
 class GameScene {
-	
-	//自キャラr
-	//player* player_ = nullptr;
-
-	float inputFloat3[3] = {0, 0, 0};
-
-	bool isDebugCameraActive_ = false; 
-
-	//デバックカメラ
-	DebugCamera* debugCamera_ = nullptr;
 
 public: // メンバ関数
 	/// <summary>
@@ -61,12 +53,20 @@ private: // メンバ変数
 	//スプライト
 	uint32_t textureHandle_ = 0;
 	//モデル
-	Model* model_;
+	Model* model_ = nullptr;
 	//カメラ
 	ViewProjection viewProjection_;
 	Player* player_ = nullptr;
 	WorldTransform worldtransform_;
+	
+	
 
+	float inputFloat3[3] = {0, 0, 0};
+
+	bool isDebugCameraActive_ = false;
+
+	// デバックカメラ
+	DebugCamera* debugCamera_ = nullptr;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

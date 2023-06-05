@@ -4,15 +4,14 @@
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "AxisIndicator.h"
-#include <ImGuiManager.h>
-#include "AxisIndicator.h"
+#include "player.h"
+#include "PlayerBullet.h"
+
 
 GameScene::GameScene() 
 {
-	// デストラクタ
-	delete sprite_;
-	delete player_;
-	delete debugCamera_;
+	
+	
 
 }
 
@@ -24,7 +23,8 @@ GameScene::~GameScene()
 	delete sprite_;
 	delete player_;
 	delete model_;
-
+	
+	
 }
 
 
@@ -36,13 +36,19 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("ga.png");
 	//モデル
 	
+	worldtransform_.Initialize();
+
 	viewProjection_.Initialize();
 	model_ = Model::Create();
-	sprite_ = Sprite::Create(textureHandle_, {350, 20});
+	//sprite_ = Sprite::Create(textureHandle_, {350, 20});
 	// 自キャラの編成
 	player_ = new Player();
+	
+
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
+
+	
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする
@@ -57,9 +63,12 @@ void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
 
+	/*
 	ImGui::InputFloat3("InputFloat3", inputFloat3);
 	ImGui::SliderFloat3("SliderFloat3", inputFloat3, 0.0f, 1.0f);
-	debugCamera_->Update();	
+	*/
+
+	
 	
 #ifdef  _DEBUG
 
@@ -73,7 +82,7 @@ void GameScene::Update() {
 
 	if (isDebugCameraActive_) 
 	{
-	
+		debugCamera_->Update();	
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		//ビュープロジェクション行列の転送
