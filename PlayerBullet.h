@@ -45,6 +45,7 @@ public:
 	ViewProjection viewProjection_;
 	//モデルのポインタ
 	Model* model_ = nullptr;
+
 	//テクスチャハンドル
 
 	uint32_t bullettextureHandle_ = 0u;

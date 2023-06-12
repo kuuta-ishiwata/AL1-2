@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Audio.h"
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -11,6 +10,7 @@
 #include "DebugCamera.h"
 #include "Player.h"
 #include "PlayerBullet.h"
+#include"Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -46,7 +46,6 @@ public: // メンバ関数
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
-
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	Sprite* sprite_ = nullptr;
@@ -54,16 +53,20 @@ private: // メンバ変数
 	uint32_t textureHandle_ = 0;
 	//モデル
 	Model* model_ = nullptr;
-	//カメラ
+	//playerカメラ
 	ViewProjection viewProjection_;
 	Player* player_ = nullptr;
 	WorldTransform worldtransform_;
-	
+
+	//enemy
+	Enemy* enemy_ = nullptr;
+	uint32_t enemytextureHandle_ = 0;
 	
 
 	float inputFloat3[3] = {0, 0, 0};
 
 	bool isDebugCameraActive_ = false;
+
 
 	// デバックカメラ
 	DebugCamera* debugCamera_ = nullptr;

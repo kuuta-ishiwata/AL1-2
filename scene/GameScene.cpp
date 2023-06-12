@@ -6,7 +6,7 @@
 #include "AxisIndicator.h"
 #include "player.h"
 #include "PlayerBullet.h"
-
+#include "Enemy.h"
 
 GameScene::GameScene() 
 {
@@ -23,7 +23,7 @@ GameScene::~GameScene()
 	delete sprite_;
 	delete player_;
 	delete model_;
-	
+	delete enemy_;
 	
 }
 
@@ -34,6 +34,7 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("ga.png");
+	enemytextureHandle_ = TextureManager::Load("white1x1.png");
 	//モデル
 	
 	worldtransform_.Initialize();
@@ -44,11 +45,19 @@ void GameScene::Initialize() {
 	// 自キャラの編成
 	player_ = new Player();
 	
+	enemy_ = new Enemy();
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 
+
 	
+
+	//敵キャラ初期化
+	enemy_->Initialize(model_, enemytextureHandle_); 
+
+	
+
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする
@@ -68,6 +77,8 @@ void GameScene::Update() {
 	ImGui::SliderFloat3("SliderFloat3", inputFloat3, 0.0f, 1.0f);
 	*/
 
+	//敵キャラ
+	enemy_->Update();
 	
 	
 #ifdef  _DEBUG
@@ -92,6 +103,7 @@ void GameScene::Update() {
 	
 	//ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();
+
 	}
 
 }
@@ -125,6 +137,7 @@ void GameScene::Draw() {
 	
 	player_->Draw(viewProjection_);
 
+    enemy_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

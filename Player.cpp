@@ -7,11 +7,13 @@
 
 void Player::Initialize(Model* model, uint32_t textureHandle)
 { 
+
 	assert(model);
 	model_ = model;
 	textureHandle_ = textureHandle;
 
 	worldtransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
@@ -25,6 +27,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	{
 		delete bullet;
 	}
+
+
 }
 
 
@@ -64,7 +68,8 @@ void Player::Attack(Vector3& position)
 }
 
 
-void Player::Update() {
+void Player::Update()
+{
 
 	//デスフラグの立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
@@ -75,10 +80,6 @@ void Player::Update() {
 		return false;
 	});
 		   
-	
-
-
-
 	Vector3 move = {0, 0, 0};
 
 	const float kCharacterSpeed = 0.2f;
@@ -126,7 +127,7 @@ void Player::Update() {
 	 worldtransform_.translation_.y = max(worldtransform_.translation_.y, -kMoveLimitY);
 	 worldtransform_.translation_.y = min(worldtransform_.translation_.y, +kMoveLimitY);
 	 worldtransform_.translation_ = Add(worldtransform_.translation_, move);
-	 
+
 	 /*
 	 worldtransform_.matWorld_ = MakeAffineMatrix(
 	     worldtransform_.scale_, worldtransform_.rotation_, worldtransform_.translation_);
