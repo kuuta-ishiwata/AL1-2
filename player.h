@@ -28,6 +28,8 @@ public:
 	//<summary>
 	void Update();
 	
+
+
 	//<summary>
 	// 描画
 	////<summary>
@@ -38,13 +40,16 @@ public:
 /// </summary>
 
 	void Attack(Vector3 &position);
+
+
 	
+
 
 private:
 	// ワ－ルド変更データ
 	WorldTransform worldtransform_;
 	ViewProjection viewProjection_;
-
+	Vector3 GetWorldposition();
 	// モデル
 	Model* model_ = nullptr;
 
@@ -62,5 +67,8 @@ private:
 	 PlayerBullet* bullet_ = nullptr;
 	
 	std::list<PlayerBullet*> bullets_;
+
+	
+
 
 };
