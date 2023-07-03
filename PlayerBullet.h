@@ -5,9 +5,10 @@
 #include<assert.h>
 #include <Input.h>
 #include "Model.h"
-#include "PrimitiveDrawer.h"
+
 class PlayerBullet
 {
+
 public: 
 	///<summary>
 	///初期化

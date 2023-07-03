@@ -7,6 +7,7 @@
 #include "player.h"
 #include "PlayerBullet.h"
 #include "Enemy.h"
+#include "EnemyBullet.h"
 
 GameScene::GameScene() 
 {
@@ -35,6 +36,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("ga.png");
 	enemytextureHandle_ = TextureManager::Load("white1x1.png");
+
 	//モデル
 	
 	worldtransform_.Initialize();
@@ -51,13 +53,11 @@ void GameScene::Initialize() {
 	player_->Initialize(model_, textureHandle_);
 
 
-	
 
 	//敵キャラ初期化
 	enemy_->Initialize(model_, enemytextureHandle_); 
 
 	
-
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする

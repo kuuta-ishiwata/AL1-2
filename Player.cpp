@@ -17,7 +17,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
-	worldtransform_.translation_ = {0.0f, 1.0f, 0.0f};
+	worldtransform_.translation_ = {50.0f, 1.0f, 0.0f};
 
 	worldtransform_.Initialize();
 	input_ = Input::GetInstance();
@@ -25,12 +25,12 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	//bulletの解放
 	for (PlayerBullet* bullet : bullets_)
 	{
+
 		delete bullet;
 	}
 
 
 }
-
 
 
 
@@ -150,6 +150,7 @@ void Player::Update()
 		bullet_->Update();
 	 }
 	 */
+
 	 for (PlayerBullet* bullet : bullets_ ) 
 	 {
 		bullet->Update();
@@ -157,10 +158,6 @@ void Player::Update()
 	 
 	 //ワールドトランスフォームの更新
 	
-
-
-
-
 	 /* ImGui::Begin("Debug");
 	 float playerPos[] = {
 	     worldtransform_.translation_.x, worldtransform_.translation_.y,
@@ -184,10 +181,11 @@ void Player::Draw(ViewProjection& viewprojection) {
 	 model_->Draw(worldtransform_, viewprojection, textureHandle_);
 
 	 // 弾描画
-	 
 	 for (PlayerBullet* bullet : bullets_)
 	 {
-		bullet->Draw(viewprojection);
+
+		 bullet->Draw(viewprojection);
+
 	 }
 	 
 }

@@ -10,7 +10,9 @@
 #include "DebugCamera.h"
 #include "Player.h"
 #include "PlayerBullet.h"
-#include"Enemy.h"
+#include "Enemy.h"
+#include "EnemyBullet.h"
+
 
 /// <summary>
 /// ゲームシーン
@@ -49,10 +51,13 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	Sprite* sprite_ = nullptr;
+
 	//スプライト
 	uint32_t textureHandle_ = 0;
+
 	//モデル
 	Model* model_ = nullptr;
+
 	//playerカメラ
 	ViewProjection viewProjection_;
 	Player* player_ = nullptr;
@@ -62,7 +67,6 @@ private: // メンバ変数
 	Enemy* enemy_ = nullptr;
 	uint32_t enemytextureHandle_ = 0;
 	
-
 	float inputFloat3[3] = {0, 0, 0};
 
 	bool isDebugCameraActive_ = false;

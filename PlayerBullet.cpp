@@ -9,7 +9,6 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position, const Vecto
 { 
 	
 	assert(model);
-
 	model_ = model;
 	//テクスチャ読み
 	bullettextureHandle_ = TextureManager::Load("tex1.png");

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Player.h"
+#include "Enemy.h"
 #include <assert.h>
 #include <ImGuiManager.h>
 
@@ -24,7 +25,7 @@ Matrix4x4 matRotZ(float rotation);
 Matrix4x4 matRotXYZ(float rotationX, float rotationY, float rotationZ);
 
     // 平行移動行列を宣言
- Matrix4x4 matTrans(const Vector3 translation);
+Matrix4x4 matTrans(const Vector3 translation);
 
 
 

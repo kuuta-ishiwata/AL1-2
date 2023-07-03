@@ -47,6 +47,7 @@ private:
 
 	// モデル
 	Model* model_ = nullptr;
+
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
@@ -57,6 +58,7 @@ private:
 
 
 	//弾
+
 	 PlayerBullet* bullet_ = nullptr;
 	
 	std::list<PlayerBullet*> bullets_;
