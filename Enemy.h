@@ -6,6 +6,9 @@
 #include <Input.h>
 #include <EnemyBullet.h>
 #include <list>
+#include <player.h>
+
+class Player;
 
 
 class Enemy
@@ -47,6 +50,10 @@ public:
 	//接近フェ-ズ初期化
 	void Approach();
 
+	void SetPlayer(Player* player) { player_ = player; }
+
+	Vector3 GetWorldPosition();
+
 private:
 	enum class Phase 
 	{
@@ -74,5 +81,10 @@ private:
 
 	//発射タイマー
 	int32_t caunt = 0;
+
+	Player* player_ = nullptr;
+
+
+
 };
 

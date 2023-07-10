@@ -6,7 +6,10 @@
 #include <Input.h>
 #include <PlayerBullet.h>
 #include <list>
+#include <Enemy.h>
 
+
+class Enemy;
 
 class Player {
 
@@ -41,15 +44,16 @@ public:
 
 	void Attack(Vector3 &position);
 
+    Vector3 GetWorldPosition();
 
-	
+	void SetEnemy(Enemy* enemy) { enemy = enemy; }
 
 
 private:
 	// ワ－ルド変更データ
 	WorldTransform worldtransform_;
 	ViewProjection viewProjection_;
-	Vector3 GetWorldposition();
+	
 	// モデル
 	Model* model_ = nullptr;
 
@@ -59,8 +63,7 @@ private:
 	Input* input_ = nullptr;
 
 
-	//uint32_t* position_ = nullptr;
-
+	
 
 	//弾
 
@@ -69,6 +72,6 @@ private:
 	std::list<PlayerBullet*> bullets_;
 
 	
-
+	Enemy* enemy_ = nullptr;
 
 };

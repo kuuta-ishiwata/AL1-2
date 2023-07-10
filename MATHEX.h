@@ -29,8 +29,16 @@ Matrix4x4 matTrans(const Vector3 translation);
 
 
 
-
-
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate);
 
 Vector3 TransformNomal(const Vector3& v, const Matrix4x4& m);
+
+
+// 正規化
+Vector3 Normalize(const Vector3& v);
+
+ //長さ
+float Length(const Vector3& v);
+
+// 内積
+float Dot(const Vector3& v1, const Vector3& v2);

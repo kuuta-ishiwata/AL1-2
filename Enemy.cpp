@@ -3,7 +3,8 @@
 #include "Enemy.h"
 #include "MATHEX.h"
 #include "EnemyBullet.h"
-
+#include <assert.h>
+#include "player.h"
 
 Enemy::~Enemy(){
 	// 敵弾解放
@@ -26,13 +27,29 @@ void Enemy::Initialize(Model* model, uint32_t enemytextureHandle)
 
 	worldtransform_.Initialize();
 	
-	worldtransform_.translation_ = {20.0f, 2.0f, 20.0f};
+	worldtransform_.translation_ = {5.0f, 2.0f, 50.0f};
 	
 	Approach();
      
 }
 
-void Enemy::Approach()
+Vector3 Enemy::GetWorldPosition()
+{
+	//ワールド座標を入れる変数
+	Vector3 worldPos;
+	//ワールド行列の平行移動成分を取得
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldPos.x = worldtransform_.matWorld_.m[3][0];
+	worldPos.y = worldtransform_.matWorld_.m[3][1];
+	worldPos.z = worldtransform_.matWorld_.m[3][2];
+
+	return worldPos;
+
+
+}
+
+
+    void Enemy::Approach()
 {
 
 	// 発射タイマーを初期化
@@ -44,12 +61,46 @@ void Enemy::Approach()
 
 void Enemy::Fire(Vector3& position)
 {
+
+	assert(player_);
 		
 	// 弾速度
-	const float kenemybulletspeed = -0.5f;
-	Vector3 enemyvelocity(0, 0, kenemybulletspeed);
+	const float kenemybulletspeed = 0.5f;
+
+	Vector3 enemyvelocity(kenemybulletspeed, kenemybulletspeed, kenemybulletspeed);
+
+   
+     Vector3 playerPos = player_-> GetWorldPosition();
+	 Vector3 enemyPos = GetWorldPosition();
+	 
+
+	 Vector3 Result =
+	 {
+
+		  
+	      playerPos.x - enemyPos.x, 
+		  playerPos.y - enemyPos.y,  
+		  playerPos.z - enemyPos.z 
+
+	 };
+
+	
+
+	Vector3 ResultNomalize =  Normalize(Result);
+
+
+	enemyvelocity = {
+
+	    ResultNomalize.x * enemyvelocity.x,
+		ResultNomalize.y * enemyvelocity.y,
+		ResultNomalize.z * enemyvelocity.z
+
+	};
+
+
 
 	//敵弾解放
+
 	/*
 	if (enemybullets_) 
 	{
@@ -68,6 +119,10 @@ void Enemy::Fire(Vector3& position)
 	enemybullets_.push_back(newEnemybulet);
 	
 	//Approach();
+
+	
+
+
 
 }
 

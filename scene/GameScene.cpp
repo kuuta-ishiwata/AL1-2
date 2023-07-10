@@ -19,13 +19,13 @@ GameScene::GameScene()
 
 GameScene::~GameScene() 
 {
-
 	// デストラクタ
 	delete sprite_;
 	delete player_;
 	delete model_;
 	delete enemy_;
 	
+
 }
 
 
@@ -37,26 +37,28 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("ga.png");
 	enemytextureHandle_ = TextureManager::Load("white1x1.png");
 
-	//モデル
-	
+	// モデル
+
 	worldtransform_.Initialize();
 
 	viewProjection_.Initialize();
 	model_ = Model::Create();
-	//sprite_ = Sprite::Create(textureHandle_, {350, 20});
-	// 自キャラの編成
+	// sprite_ = Sprite::Create(textureHandle_, {350, 20});
+	//  自キャラの編成
 	player_ = new Player();
-	
+
 	enemy_ = new Enemy();
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
-
+	
+	enemy_->SetPlayer(player_);
 
 
 	//敵キャラ初期化
 	enemy_->Initialize(model_, enemytextureHandle_); 
 
+	player_->SetEnemy(enemy_);
 	
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);

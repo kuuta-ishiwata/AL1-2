@@ -1,6 +1,7 @@
 ﻿#include "MATHEX.h"
 #include "Matrix4x4.h"
 
+
 Vector3 Add(const Vector3 v1, const Vector3& v2) {
 	Vector3 result;
 	result.x = v1.x + v2.x;
@@ -149,6 +150,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	result = Multiply(scale_, Multiply(rot_, translate_));
 
 	return result;
+
 }
 
 Vector3 TransformNomal(const Vector3& v, const Matrix4x4& m)
@@ -162,3 +164,32 @@ Vector3 TransformNomal(const Vector3& v, const Matrix4x4& m)
 		    return result;
 	
 }
+
+
+// 内積
+float Dot(const Vector3& v1, const Vector3& v2) {
+	        float result;
+
+	        result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+
+	        return result;
+}
+
+// 長さ
+float Length(const Vector3& v) {
+	        float result;
+	        result = sqrtf(Dot(v, v));
+	        return result;
+}
+
+// 正規化
+Vector3 Normalize(const Vector3& v) {
+	        Vector3 result;
+
+	        result.x = v.x / Length(v);
+	        result.y = v.y / Length(v);
+	        result.z = v.z / Length(v);
+	        return result;
+}
+
+
