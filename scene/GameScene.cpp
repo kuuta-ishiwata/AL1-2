@@ -1,13 +1,15 @@
 #include "GameScene.h"
 #include "TextureManager.h"
+#include "PrimitiveDrawer.h"
 #include <cassert>
 #include "ImGuiManager.h"
-#include "PrimitiveDrawer.h"
 #include "AxisIndicator.h"
 #include "player.h"
-#include "PlayerBullet.h"
 #include "Enemy.h"
+#include "PlayerBullet.h"
 #include "EnemyBullet.h"
+
+
 
 GameScene::GameScene() 
 {
@@ -19,13 +21,13 @@ GameScene::GameScene()
 
 GameScene::~GameScene() 
 {
+
 	// デストラクタ
 	delete sprite_;
 	delete player_;
 	delete model_;
 	delete enemy_;
 	
-
 }
 
 
@@ -48,7 +50,8 @@ void GameScene::Initialize() {
 	player_ = new Player();
 
 	enemy_ = new Enemy();
-
+	
+	
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 	
@@ -58,7 +61,6 @@ void GameScene::Initialize() {
 	//敵キャラ初期化
 	enemy_->Initialize(model_, enemytextureHandle_); 
 
-	player_->SetEnemy(enemy_);
 	
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
@@ -69,6 +71,135 @@ void GameScene::Initialize() {
 
 
 }
+
+
+
+void GameScene::CheckAllCollisions() {
+	// 判定対象AとBの座標
+	Vector3 posA, posB;
+
+	// 自弾リストの取得
+		const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	// 敵弾リストの取得
+	    const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+
+#pragma region // 自キャラ敵弾当たり判定
+
+	// 自キャラ座標
+	posA = player_->GetWorldPosition();
+
+	// 自キャラの敵弾当たり判定
+	for (EnemyBullet* bullet : enemyBullets) {
+		// 敵弾の座標
+		posB = bullet->GetWorldPosition();
+
+		float  radius = 0.7f;
+	
+		float px;
+		float py;
+		float pz;
+		
+		px = posB.x - posA.x;
+		py = posB.y - posA.y;
+		pz = posB.z - posA.z;
+
+		
+		float Pos;
+
+		Pos = (px * px) + (py * py) + (pz * pz);
+
+		if (Pos <= (radius + radius) * (radius + radius)) {
+
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+
+	
+
+	Vector3 PosB, PosA;
+	// 敵キャラ座標
+	PosB = enemy_->GetWorldPosition();
+
+	for (PlayerBullet* playerbullet : playerBullets)
+	{
+
+		PosA =  playerbullet->GetWorldPosition();
+
+		float radius2 = 0.7f;
+
+		float Px;
+		float Py;
+		float Pz;
+
+		Px = PosA.x - PosB.x;
+		Py = PosA.y - PosB.y;
+		Pz = PosA.z - PosB.z;
+
+		float Pos2;
+
+		Pos2 = (Px * Px) + (Py * Py) + (Pz * Pz);
+
+		if (Pos2 <= (radius2 + radius2) * (radius2 + radius2)) 
+		{
+
+			// 敵キャラの衝突時コールバックを呼び出す
+			enemy_->OnCollision();
+			// 自弾の衝突時コールバックを呼び出す
+			playerbullet->OnCollision();
+
+		}
+	}
+
+
+	Vector3 POSA, POSB;
+	
+	for (PlayerBullet* playerbullet : playerBullets)
+	{
+		POSA = playerbullet->GetWorldPosition();
+
+		for (EnemyBullet* enemybullet : enemyBullets)
+		{
+			
+			POSB = enemybullet->GetWorldPosition();
+
+			float radius3 = 0.7f;
+
+			float PX;
+			float PY;
+			float PZ;
+
+			PX = POSA.x - POSB.x;
+			PY = POSA.y - POSB.y;
+			PZ = POSA.z - POSB.z;
+			
+
+			float POS;
+			
+
+			POS = (PX * PX) + (PY * PY) + (PZ * PZ);
+
+
+			if (POS <= (radius3 + radius3) * (radius3 + radius3)) {
+
+				// 敵玉の衝突時コールバックを呼び出す
+				playerbullet->OnCollision();
+				// 自弾の衝突時コールバックを呼び出す
+				enemybullet->OnCollision();
+			}
+
+
+			
+		}
+
+	}
+
+
+
+}
+
 
 void GameScene::Update() { 
 	// 自キャラの更新
@@ -82,7 +213,10 @@ void GameScene::Update() {
 	//敵キャラ
 	enemy_->Update();
 	
+	CheckAllCollisions();
 	
+	
+
 #ifdef  _DEBUG
 
 	if (input_->TriggerKey(DIK_M))
@@ -91,7 +225,6 @@ void GameScene::Update() {
     }
 
 #endif //  
-
 
 	if (isDebugCameraActive_) 
 	{

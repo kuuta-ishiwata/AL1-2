@@ -46,6 +46,12 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	///衝突判定と応答
+	/// </summary>
+	void CheckAllCollisions();
+
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -63,9 +69,11 @@ private: // メンバ変数
 	Player* player_ = nullptr;
 	WorldTransform worldtransform_;
 
+	
 	//enemy
 	Enemy* enemy_ = nullptr;
 	uint32_t enemytextureHandle_ = 0;
+	
 	
 	float inputFloat3[3] = {0, 0, 0};
 

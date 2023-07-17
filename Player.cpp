@@ -6,7 +6,6 @@
 
 
 
-
 void Player::Initialize(Model* model, uint32_t textureHandle)
 { 
 
@@ -19,18 +18,20 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
-	worldtransform_.translation_ = {50.0f, 1.0f, 0.0f};
+	worldtransform_.translation_ = {20.0f, 2.0f, 0.0f};
 
 	worldtransform_.Initialize();
 	input_ = Input::GetInstance();
 
+
+	
 	//bulletの解放
 	for (PlayerBullet* bullet : bullets_)
 	{
 
 		delete bullet;
 	}
-
+	
 
 }
 
@@ -49,20 +50,19 @@ Vector3 Player::GetWorldPosition()
 
 void Player::Attack(Vector3& position)
 {
-	if (input_->PushKey(DIK_SPACE))
+	if (input_->TriggerKey(DIK_SPACE))
 	{   
 		
-		//弾があれば解放
-		/*
+		//弾があれば解 
 		if (bullet_)
 		{
 			delete bullet_;
 			bullet_ = nullptr;
 		}
-		*/
+		
 		
 		//弾の速度
-		const float kBulletSpeed = 1.0f;
+		const float kBulletSpeed = 0.4f;
 		Vector3 velocity(0, 0, kBulletSpeed);
 
 		//速度ベクトルを自機の向きに合わせて回転
@@ -80,6 +80,10 @@ void Player::Attack(Vector3& position)
 
 }
 
+void Player::OnCollision()
+{
+
+}
 
 void Player::Update()
 {
@@ -185,6 +189,7 @@ void Player::Update()
 	 */
 
 }
+
 
 
 

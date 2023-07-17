@@ -16,6 +16,9 @@ public:
 
 	void Initialize(Model* model, const Vector3& Enemybulletposition, const Vector3 velocity);
 
+	
+	
+
 	///< summary>
 	/// 更新
 	/// </summary>
@@ -28,6 +31,11 @@ public:
 	///< param name="viewProjection">ビュープロジェクション</param>
 
 	void Draw(const ViewProjection& viewprojection);
+
+	// 衝突を検出したら呼び出される関数
+	void OnCollision();
+
+	Vector3 GetWorldPosition();
 
 private:
 	// 寿命
@@ -50,6 +58,8 @@ private:
 	
 	// 速度
 	Vector3 enemybulltvelocity_;
+
+	
 
 
 };

@@ -6,6 +6,8 @@
 #include <Input.h>
 #include "Model.h"
 
+
+
 class PlayerBullet
 {
 
@@ -39,6 +41,12 @@ public:
 	///<param name="viewProjection">ビュープロジェクション</param>
 	
 	void Draw(const ViewProjection& viewprojection);
+
+	Vector3 GetWorldPosition();
+
+	// 衝突を検出したら呼び出される関数
+	void OnCollision();
+
 
 	private:
 		//ワールド変更データ
