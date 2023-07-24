@@ -54,6 +54,15 @@ public:
 
 	Vector3 GetWorldPosition();
 
+	//衝突を検出したら呼び出される関数
+	void OnCollision();
+
+
+	// 弾リスト取得
+
+	const std::list<EnemyBullet*>& GetBullets() const { return enemybullets_; }
+
+
 private:
 	enum class Phase 
 	{
@@ -84,7 +93,7 @@ private:
 
 	Player* player_ = nullptr;
 
-
+	
 
 };
 

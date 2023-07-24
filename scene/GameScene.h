@@ -12,7 +12,7 @@
 #include "PlayerBullet.h"
 #include "Enemy.h"
 #include "EnemyBullet.h"
-
+#include "Skydome.h"
 
 /// <summary>
 /// ゲームシーン
@@ -46,6 +46,12 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	///衝突判定と応答
+	/// </summary>
+	void CheckAllCollisions();
+
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -72,9 +78,18 @@ private: // メンバ変数
 	bool isDebugCameraActive_ = false;
 
 
+
+
 	// デバックカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	/// 
+	
+	/// 天球
+	Model* Skydomemodel_ = nullptr;
+
+	Skydome* skymodel_ = nullptr; 
+
 };

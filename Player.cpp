@@ -80,6 +80,10 @@ void Player::Attack(Vector3& position)
 
 }
 
+void Player::OnCollision()
+{
+
+}
 
 void Player::Update()
 {
@@ -185,6 +189,7 @@ void Player::Update()
 	 */
 
 }
+
 
 
 

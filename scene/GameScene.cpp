@@ -1,13 +1,15 @@
 #include "GameScene.h"
 #include "TextureManager.h"
+#include "PrimitiveDrawer.h"
 #include <cassert>
 #include "ImGuiManager.h"
-#include "PrimitiveDrawer.h"
 #include "AxisIndicator.h"
 #include "player.h"
-#include "PlayerBullet.h"
 #include "Enemy.h"
+#include "PlayerBullet.h"
 #include "EnemyBullet.h"
+#include "Skydome.h"
+
 
 GameScene::GameScene() 
 {
@@ -24,21 +26,24 @@ GameScene::~GameScene()
 	delete player_;
 	delete model_;
 	delete enemy_;
-	
+	delete Skydomemodel_;
 
 }
 
 
 void GameScene::Initialize() {
 
+
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("ga.png");
 	enemytextureHandle_ = TextureManager::Load("white1x1.png");
+    Skydomemodel_ = Model::CreateFromOBJ("skydome", true);
+
+
 
 	// モデル
-
 	worldtransform_.Initialize();
 
 	viewProjection_.Initialize();
@@ -58,8 +63,13 @@ void GameScene::Initialize() {
 	//敵キャラ初期化
 	enemy_->Initialize(model_, enemytextureHandle_); 
 
-	player_->SetEnemy(enemy_);
-	
+	//天球
+	skymodel_ = new Skydome();
+
+    skymodel_->Initialize(Skydomemodel_);
+
+	viewProjection_.farZ = 1000.0f;
+
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする
@@ -69,6 +79,84 @@ void GameScene::Initialize() {
 
 
 }
+
+
+
+void GameScene::CheckAllCollisions() {
+	// 判定対象AとBの座標
+	Vector3 posA, posB;
+
+	// 自弾リストの取得
+		const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	// 敵弾リストの取得
+	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+
+#pragma region // 自キャラ敵弾当たり判定
+
+	// 自キャラ座標
+	posA = player_->GetWorldPosition();
+
+	// 自キャラの敵弾当たり判定
+	for (EnemyBullet* bullet : enemyBullets) {
+
+		// 敵弾の座標
+		posB = bullet->GetWorldPosition();
+
+		float  radius = 0.6f;
+	
+		float px;
+		float py;
+		float pz;
+		
+		px = posB.x - posA.x;
+		py = posB.y - posA.y;
+		pz = posB.z - posA.z;
+
+		
+		float Pos;
+
+		Pos = (px * px) + (py * py) + (pz * pz);
+
+		if (Pos <= (radius * radius) + (radius * radius)) {
+
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+
+	for (PlayerBullet* bullet : playerBullets)
+	{
+		posB =  bullet->GetWorldPosition();
+
+		float radius = 0.6f;
+
+		float px;
+		float py;
+		float pz;
+
+		px = posB.x - posA.x;
+		py = posB.y - posA.y;
+		pz = posB.z - posA.z;
+
+		float Pos;
+
+		Pos = (px * px) + (py * py) + (pz * pz);
+
+		if (Pos <= (radius * radius) + (radius * radius)) {
+
+			// 自キャラの衝突時コールバックを呼び出す
+			enemy_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+
+		}
+
+	}
+
+}
+
 
 void GameScene::Update() { 
 	// 自キャラの更新
@@ -82,7 +170,12 @@ void GameScene::Update() {
 	//敵キャラ
 	enemy_->Update();
 	
+	skymodel_->Update();
+
+	CheckAllCollisions();
 	
+	
+
 #ifdef  _DEBUG
 
 	if (input_->TriggerKey(DIK_M))
@@ -91,7 +184,6 @@ void GameScene::Update() {
     }
 
 #endif //  
-
 
 	if (isDebugCameraActive_) 
 	{
@@ -137,9 +229,14 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
+	
+	skymodel_->Draw(viewProjection_);
+
 	player_->Draw(viewProjection_);
 
     enemy_->Draw(viewProjection_);
+
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

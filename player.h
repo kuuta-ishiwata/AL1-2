@@ -6,10 +6,6 @@
 #include <Input.h>
 #include <PlayerBullet.h>
 #include <list>
-#include <Enemy.h>
-
-
-class Enemy;
 
 class Player {
 
@@ -46,7 +42,12 @@ public:
 
     Vector3 GetWorldPosition();
 
-	void SetEnemy(Enemy* enemy) { enemy = enemy; }
+	// 衝突を検出したら呼び出される関数
+	void OnCollision();
+
+	// 弾リスト取得
+
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
 
 private:
@@ -70,8 +71,5 @@ private:
 	 PlayerBullet* bullet_ = nullptr;
 	
 	std::list<PlayerBullet*> bullets_;
-
-	
-	Enemy* enemy_ = nullptr;
 
 };

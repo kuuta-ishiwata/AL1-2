@@ -29,6 +29,11 @@ public:
 
 	void Draw(const ViewProjection& viewprojection);
 
+	// 衝突を検出したら呼び出される関数
+	void OnCollision();
+
+	Vector3 GetWorldPosition();
+
 private:
 	// 寿命
 	static const int32_t kLifeTime = 60 * 5;
@@ -50,6 +55,8 @@ private:
 	
 	// 速度
 	Vector3 enemybulltvelocity_;
+
+	
 
 
 };
