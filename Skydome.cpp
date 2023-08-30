@@ -25,11 +25,10 @@ void Skydome::Initialize(Model* model) {
 
 }
 
-void Skydome::Update() {
-	
+void Skydome::Update()
+{
 	
 	worldtransform_.UpdateMatrix();
-
 
 }
 

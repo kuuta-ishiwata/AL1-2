@@ -24,6 +24,7 @@ void Enemy::Initialize(Model* model, uint32_t enemytextureHandle) {
 	worldtransform_.translation_ = {5.0f, 2.0f, 50.0f};
 
 	Approach();
+
 }
 
 Vector3 Enemy::GetWorldPosition() {
@@ -68,8 +69,10 @@ void Enemy::Fire(Vector3& position) {
 
 	enemyvelocity = {
 
+
 	    ResultNomalize.x * enemyvelocity.x, ResultNomalize.y * enemyvelocity.y,
 	    ResultNomalize.z * enemyvelocity.z
+
 
 	};
 
@@ -92,7 +95,9 @@ void Enemy::Fire(Vector3& position) {
 	// 弾登録
 	enemybullets_.push_back(newEnemybulet);
 
+
 	// Approach();
+
 }
 
 void Enemy::Update() {

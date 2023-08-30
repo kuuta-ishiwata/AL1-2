@@ -9,13 +9,15 @@
 #include "PlayerBullet.h"
 #include "EnemyBullet.h"
 #include "Skydome.h"
+#include "RailCamera.h"
+
 
 
 GameScene::GameScene() 
 {
 	
-	
 
+	
 }
 
 
@@ -27,6 +29,7 @@ GameScene::~GameScene()
 	delete model_;
 	delete enemy_;
 	delete Skydomemodel_;
+	delete Railcamera_;
 
 }
 
@@ -70,13 +73,26 @@ void GameScene::Initialize() {
 
 	viewProjection_.farZ = 1000.0f;
 
+	//レールカメラ
+
+	Vector3 radian{0,0,0};
+	Vector3 position{0, 0,0};
+
+	RailCamera_ = new RailCamera();
+
+	RailCamera_->Initialize(player_->GetWorldPosition(),radian);
+
+	player_->SetParent(&RailCamera_ ->GetworldTransform());
+
+	player_->Initialize(model_, textureHandle_);
+
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
-
+	
 
 }
 
@@ -174,7 +190,7 @@ void GameScene::Update() {
 
 	CheckAllCollisions();
 	
-	
+	RailCamera_->Update();
 
 #ifdef  _DEBUG
 
@@ -187,16 +203,19 @@ void GameScene::Update() {
 
 	if (isDebugCameraActive_) 
 	{
+
 		debugCamera_->Update();	
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		//ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
+
 	
 	} else {
 	
 	//ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();
+
 
 	}
 
@@ -219,6 +238,7 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
+
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画

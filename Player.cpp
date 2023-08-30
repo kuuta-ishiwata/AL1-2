@@ -47,6 +47,7 @@ Vector3 Player::GetWorldPosition()
 	return worldPos;
 }
 
+
 void Player::Attack(Vector3& position)
 {
 	if (input_->PushKey(DIK_SPACE))
@@ -191,7 +192,10 @@ void Player::Update()
 }
 
 
-
+void Player::SetParent(const WorldTransform* parent)
+{ 
+	worldtransform_.parent_ = parent; 
+}
 
 void Player::Draw(ViewProjection& viewprojection) {
 
@@ -205,6 +209,7 @@ void Player::Draw(ViewProjection& viewprojection) {
 
 	 }
 	 
+
 }
 
 
