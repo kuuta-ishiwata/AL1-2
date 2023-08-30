@@ -66,7 +66,8 @@ private:
 	Input* input_ = nullptr;
 
 
-	
+	// デスフラグ
+	bool isDead_ = false;
 
 	//弾
 

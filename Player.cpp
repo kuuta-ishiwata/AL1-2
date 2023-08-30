@@ -82,9 +82,7 @@ void Player::Attack(Vector3& position)
 }
 
 void Player::OnCollision()
-{
-
-}
+{ isDead_ = true; }
 
 void Player::Update()
 {

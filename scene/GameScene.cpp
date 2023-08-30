@@ -95,9 +95,9 @@ void GameScene::Initialize() {
 	
 	
 	
-	Vector3 playerPosition(0, 0, 20.0f);
-	
-	player_->Initialize(modelFighter_,modelCube_, playerPosition.z);
+	//Vector3 playerPosition(0, 0, 20.0f);
+	//
+	//player_->Initialize(modelFighter_,modelCube_, playerPosition.z);
 
 }
 
@@ -144,9 +144,11 @@ void GameScene::CheckAllCollisions() {
 			player_->OnCollision();
 			// 敵弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
+			
 		}
+	
 	}
-
+	
 	for (PlayerBullet* bullet : playerBullets)
 	{
 		posB =  bullet->GetWorldPosition();
