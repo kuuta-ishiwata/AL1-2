@@ -93,11 +93,11 @@ void GameScene::Initialize() {
 	//軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 	
-	Vector3 modelFighter_;
-	Vector3 modelCube_;
-	Vector3 playerPosition(0, 0, 50);
-
-	player_->Initialize(modelFighter_, modelCube_, playerPosition);
+	
+	
+	Vector3 playerPosition(0, 0, 20.0f);
+	
+	player_->Initialize(modelFighter_,modelCube_, playerPosition.z);
 
 }
 

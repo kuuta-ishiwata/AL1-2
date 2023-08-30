@@ -78,7 +78,8 @@ private: // メンバ変数
 
 	bool isDebugCameraActive_ = false;
 
-
+	 Model* modelFighter_ = nullptr;
+	 uint32_t modelCube_ = 0;
 
 
 	// デバックカメラ
@@ -96,6 +97,7 @@ private: // メンバ変数
 	Model* Railcamera_ = nullptr;
 
 	RailCamera* RailCamera_ = nullptr;
+	
 	
 
 };

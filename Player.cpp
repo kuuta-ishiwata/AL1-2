@@ -204,7 +204,6 @@ void Player::Draw(ViewProjection& viewprojection) {
 	 // 弾描画
 	 for (PlayerBullet* bullet : bullets_)
 	 {
-
 		 bullet->Draw(viewprojection);
 
 	 }
