@@ -4,16 +4,17 @@
 #include "player.h"
 #include <ImGuiManager.h>
 #include <assert.h>
+#include "GameScene.h"
 
 Enemy::~Enemy() {
-	// 敵弾解放
-	for (EnemyBullet* enemybullet : enemybullets_) {
-
-		delete enemybullet;
-	}
+	//// 敵弾解放
+	//for (EnemyBullet* enemybullet : enemybullets_) {
+	//
+	//	delete enemybullet;
+	//}
 }
 
-void Enemy::Initialize(Model* model, uint32_t enemytextureHandle) {
+void Enemy::Initialize(Model* model, uint32_t enemytextureHandle, Vector3 Position) {
 
 	assert(model);
 	model_ = model;
@@ -21,7 +22,9 @@ void Enemy::Initialize(Model* model, uint32_t enemytextureHandle) {
 
 	worldtransform_.Initialize();
 
-	worldtransform_.translation_ = {5.0f, 2.0f, 50.0f};
+	worldtransform_.translation_ = {10.0f, 10.0f, 50.0f};
+
+	worldtransform_.translation_ = Position;
 
 	Approach();
 
@@ -92,8 +95,10 @@ void Enemy::Fire(Vector3& position) {
 	EnemyBullet* newEnemybulet = new EnemyBullet();
 	newEnemybulet->Initialize(model_, position, enemyvelocity);
 
+	gameScene_->AddEnemyBullet(newEnemybulet);
+
 	// 弾登録
-	enemybullets_.push_back(newEnemybulet);
+	//enemybullets_.push_back(newEnemybulet);
 
 
 	// Approach();
@@ -114,11 +119,11 @@ void Enemy::Update() {
 		worldtransform_.translation_.z -= kenemyspeed;
 
 		// 規定の位置に到達したら離脱
-
+		/*
 		if (worldtransform_.translation_.z < 0.0f) {
 			phase_ = Phase::Leave;
 		}
-
+		*/
 		if (caunt <= 0) {
 
 			// 敵攻撃
@@ -141,28 +146,28 @@ void Enemy::Update() {
 	worldtransform_.UpdateMatrix();
 
 	// デスフラグの立った弾を削除
-	enemybullets_.remove_if([](EnemyBullet* enemybullet) {
+	/*enemybullets_.remove_if([](EnemyBullet* enemybullet) {
 		if (enemybullet->IsDead()) {
 			delete enemybullet;
 			return true;
 		}
 		return false;
-	});
+	});*/
 
-	worldtransform_.UpdateMatrix();
-
-	for (EnemyBullet* enemybullet : enemybullets_) {
+	worldtransform_.TransferMatrix();
+	/*for (EnemyBullet* enemybullet : enemybullets_) {
 
 		enemybullet->Update();
-	}
+	}*/
 }
 
 void Enemy::Draw(ViewProjection& enemyviewprojection) {
 
 	model_->Draw(worldtransform_, enemyviewprojection, enemytextureHandle_);
 
+
 	// 敵弾描画
-	for (EnemyBullet* enemybullet : enemybullets_) {
-		enemybullet->Draw(enemyviewprojection);
-	}
+	//for (EnemyBullet* enemybullet : enemybullets) {
+	//	enemybullet->Draw(enemyviewprojection);
+	//}
 }

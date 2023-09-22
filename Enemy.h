@@ -10,17 +10,20 @@
 
 class Player;
 
+// GameSceneの前方宣言
+class GameScene;
 
 class Enemy
 {
 
 public:
 
+
 	//<summary>
 	//初期化
 	//<summary>
 
-	void Initialize(Model* model, uint32_t enemytextureHandle);
+	void Initialize(Model* model, uint32_t enemytextureHandle, Vector3 Position);
 
 	///<summary>
 	///デストラクタ
@@ -57,11 +60,20 @@ public:
 	//衝突を検出したら呼び出される関数
 	void OnCollision();
 
+	//const std::list<EnemyBullet*>& EnemyGetBullets() const { return Enemybullets_; }
 
 	// 弾リスト取得
 
-	const std::list<EnemyBullet*>& GetBullets() const { return enemybullets_; }
 
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+
+	bool IsDead() const 
+	{ 
+		
+		return isdead_;
+
+
+	}
 
 private:
 	enum class Phase 
@@ -84,16 +96,19 @@ private:
 	Phase phase_ = Phase::Approach;
 	
 	//敵弾
-    //EnemyBullet* enemybullet_ = nullptr;
+    EnemyBullet* enemybullet_ = nullptr;
 
-	std::list<EnemyBullet*> enemybullets_;
+	//std::list<EnemyBullet*> Enemybullets_;
+
 
 	//発射タイマー
 	int32_t caunt = 0;
 
 	Player* player_ = nullptr;
 
-	
+	//ゲームシーン
+	GameScene* gameScene_ = nullptr;
 
+	bool isdead_ = false;
 };
 

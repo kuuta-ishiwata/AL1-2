@@ -29,14 +29,19 @@ Matrix4x4 matRotXYZ(float rotationX, float rotationY, float rotationZ);
 Matrix4x4 matTrans(const Vector3 translation);
 
 
-
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate);
+
+Matrix4x4 MakeViewPortMatrix( float left, float top, float width, float height, float minDepth, float maxDepth);
+
 
 Vector3 TransformNomal(const Vector3& v, const Matrix4x4& m);
 
 
-// 正規化
+    // 正規化
 Vector3 Normalize(const Vector3& v);
+
+
+Vector3 Transform(Vector3 vector, Matrix4x4 matrix);
 
  //長さ
 float Length(const Vector3& v);

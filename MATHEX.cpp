@@ -10,6 +10,7 @@ Vector3 Add(const Vector3 v1, const Vector3& v2) {
 	return result;
 };
 
+
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 
 	Matrix4x4 result;
@@ -52,6 +53,12 @@ Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 
 	return result;
 }
+
+
+
+
+
+
 
 Matrix4x4 Inverse(const Matrix4x4& m) {
 	Matrix4x4 result;
@@ -167,6 +174,7 @@ Matrix4x4 Inverse(const Matrix4x4& m) {
 	                 rectdeterminant;
 
 	return result;
+
 };
 
 
@@ -227,6 +235,7 @@ Matrix4x4 matRotXYZ(float rotationX, float rotationY, float rotationZ) {
 	return matrotXYZ;
 }
 
+
 // 平行移動行列を宣言
 Matrix4x4 matTrans(const Vector3 translation) {
 	Matrix4x4 result;
@@ -251,6 +260,7 @@ Matrix4x4 matTrans(const Vector3 translation) {
 	return result;
 }
 
+
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate) {
 
 	Matrix4x4 result;
@@ -270,17 +280,23 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 
 }
 
+
+
+
+
 Vector3 TransformNomal(const Vector3& v, const Matrix4x4& m)
 {
+
 	Vector3 result{
 	    v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0],
 	    v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1],
 	    v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2],
 	};
-
 		    return result;
-	
+
+
 }
+
 
 
 // 内積
@@ -310,3 +326,77 @@ Vector3 Normalize(const Vector3& v) {
 }
 
 
+Matrix4x4 MakeViewPortMatrix(
+    float left, float top, float width, float height, float minDepth, float maxDepth) {
+
+	        Matrix4x4 result{};
+
+	        for (int i = 0; i < 4; i++)
+			{
+
+		        for (int j = 0; j < 4; j++)
+		        {
+
+		        	result.m[i][j] = 0;
+
+		        }
+	        }
+	        result.m[0][0] = width / 2;
+	        result.m[1][1] = -(height / 2);
+	        result.m[2][2] = maxDepth - minDepth;
+	        result.m[3][0] = left + (width / 2);
+	        result.m[3][1] = top + (height / 2);
+	        result.m[3][2] = minDepth;
+	        result.m[3][3] = 1;
+	        return result;
+}
+
+
+
+/*
+Vector3 Transform(const Vector3& vecter, const Matrix4x4& matrix)
+{
+
+   Vector3 result;
+
+   result.x = vecter.x * matrix.m[0][0] + vecter.y * matrix.m[1][0] + vecter.z * matrix.m[2][0] +
+	          1.0f * matrix.m[3][0];
+
+   result.y = vecter.x * matrix.m[0][1] + vecter.y * matrix.m[1][1] + vecter.z * matrix.m[2][1] +
+	          1.0f * matrix.m[3][1];
+
+   result.z = vecter.x * matrix.m[0][2] + vecter.y * matrix.m[1][2] + vecter.z * matrix.m[2][2] +
+	          1.0f * matrix.m[3][2];
+
+   float w = vecter.x * matrix.m[0][3] + vecter.y * matrix.m[1][3] + vecter.z * matrix.m[2][3] +
+	         1.0f * matrix.m[3][3];
+
+   assert(w != 0.0f);
+   result.x /= w;
+   result.y /= w;
+   result.z /= w;
+
+   return result;
+
+
+};
+*/
+
+Vector3 Transform(Vector3 vector, Matrix4x4 matrix) {
+	        Vector3 result{};
+	        result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] +
+	                   vector.z * matrix.m[2][0] + 1.0f * matrix.m[3][0];
+	        result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] +
+	                   vector.z * matrix.m[2][1] + 1.0f * matrix.m[3][1];
+	        result.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] +
+	                   vector.z * matrix.m[2][2] + 1.0f * matrix.m[3][2];
+
+	        float w = vector.x * matrix.m[0][3] + vector.y * matrix.m[1][3] +
+	                  vector.z * matrix.m[2][3] + 1.0f * matrix.m[3][3];
+
+	        assert(w != 0.0f);
+	        result.x /= w;
+	        result.y /= w;
+	        result.z /= w;
+	        return result;
+}
