@@ -11,6 +11,16 @@ Vector3 Add(const Vector3 v1, const Vector3& v2) {
 };
 
 
+// 減算
+Vector3 Substract(const Vector3& v1, const Vector3& v2) {
+	
+	Vector3 result;
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	return result;
+};
+
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 
 	Matrix4x4 result;
@@ -352,35 +362,6 @@ Matrix4x4 MakeViewPortMatrix(
 }
 
 
-
-/*
-Vector3 Transform(const Vector3& vecter, const Matrix4x4& matrix)
-{
-
-   Vector3 result;
-
-   result.x = vecter.x * matrix.m[0][0] + vecter.y * matrix.m[1][0] + vecter.z * matrix.m[2][0] +
-	          1.0f * matrix.m[3][0];
-
-   result.y = vecter.x * matrix.m[0][1] + vecter.y * matrix.m[1][1] + vecter.z * matrix.m[2][1] +
-	          1.0f * matrix.m[3][1];
-
-   result.z = vecter.x * matrix.m[0][2] + vecter.y * matrix.m[1][2] + vecter.z * matrix.m[2][2] +
-	          1.0f * matrix.m[3][2];
-
-   float w = vecter.x * matrix.m[0][3] + vecter.y * matrix.m[1][3] + vecter.z * matrix.m[2][3] +
-	         1.0f * matrix.m[3][3];
-
-   assert(w != 0.0f);
-   result.x /= w;
-   result.y /= w;
-   result.z /= w;
-
-   return result;
-
-
-};
-*/
 
 Vector3 Transform(Vector3 vector, Matrix4x4 matrix) {
 	        Vector3 result{};

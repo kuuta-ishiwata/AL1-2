@@ -50,6 +50,7 @@ public:
 
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 	
+	
 
 	void SetParent(const WorldTransform* parent);
 
@@ -85,12 +86,13 @@ private:
 
 	//2Dレティクル用のスプライト
 
- 
 	; 
 	Sprite* sprite2DReticle_ = nullptr; 
    
 	Vector2 ReticlePos_ = {640, 360};
+
 	Vector4 color_ = {1, 1, 1, 1};
+
 	Vector2 anchor_ = {0.5f, 0.5f};
 
 	

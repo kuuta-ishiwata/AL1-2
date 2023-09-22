@@ -112,6 +112,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MATHEX.cpp" />
     <ClCompile Include="Player.cpp" />
