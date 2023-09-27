@@ -50,8 +50,6 @@ public:
 
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 	
-	
-
 	void SetParent(const WorldTransform* parent);
 
 	
@@ -75,12 +73,14 @@ private:
 
 	// デスフラグ
 	bool isDead_ = false;
-
+  
 	// 弾
 
 	PlayerBullet* bullet_ = nullptr;
 
 	std::list<PlayerBullet*> bullets_;
+
+	
 
 	WorldTransform worldTransform3DReticle_;
 

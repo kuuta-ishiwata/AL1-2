@@ -31,12 +31,12 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 Position) 
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
-	worldtransform_.translation_ = {50.0f, 1.0f, 0.0f};
+	worldtransform_.translation_ = {20.0f, 1.0f, 0.0f};
 
 	worldtransform_.Initialize();
 	input_ = Input::GetInstance();
 
-	
+
 
 	worldTransform3DReticle_.Initialize();
 	
@@ -46,7 +46,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 Position) 
 
 	//スプライト生成
 	sprite2DReticle_ = Sprite::Create(textureReticle,ReticlePos_, color_,anchor_);
-;    
+
 
 }
 
@@ -61,9 +61,9 @@ void Player::Attack(Vector3& position)
 		
 		//弾の速度
 		const float kBulletSpeed = 1.0f;
-		Vector3 velocity(0, 0, kBulletSpeed);
+		Vector3 velocity(0, 0, kBulletSpeed);           
 
-		           
+
 
 		//速度ベクトルを自機の向きに合わせて回転
 		// velocity = TransformNomal(velocity,worldtransform_.matWorld_);
@@ -80,17 +80,26 @@ void Player::Attack(Vector3& position)
 
 		// 弾を登録
 		bullets_.push_back(newBullet);
-		
 	}
+
 }
 
-void Player::OnCollision()
-{ isDead_ = true; }
+void Player::OnCollision() 
+{ 
+	
+
+    isDead_ = true;
+
+
+}
+
 
 
 
 
 void Player::Update(ViewProjection viewprojection) {
+
+
 
 	//デスフラグの立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
@@ -100,11 +109,13 @@ void Player::Update(ViewProjection viewprojection) {
 		}
 		return false;
 	});
-		   
+    
+
+
 	Vector3 move = {0, 0, 0};
 
 	
-	const float kCharacterSpeed = 0.2f;
+	const float kCharacterSpeed = 0.1f;
 	
 	// 押した方向で移動ベクトルを変更
 
@@ -170,10 +181,7 @@ void Player::Update(ViewProjection viewprojection) {
 	 worldtransform_.UpdateMatrix();
 	 
 
-	 
-
-	 
-	 
+	
 	 //ワールドトランスフォームの更新
 	
 	 /* ImGui::Begin("Debug");
@@ -235,9 +243,6 @@ void Player::Update(ViewProjection viewprojection) {
 	 //   sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
 
 
-
-
-
 		 //マウスカーソル
 		 POINT mousePosition;
 	     // マウス座標（スクリーン座標）を取得
@@ -281,7 +286,7 @@ void Player::Update(ViewProjection viewprojection) {
 
 
 		 //カメラから照準のオブジェクト
-	     const float kDistanceTestObject = 100.0f;
+	     const float kDistanceTestObject = 90.0f;
 
 		 worldTransform3DReticle_.translation_.x = posNear.x + mouseDirection.x * kDistanceTestObject;
 	     worldTransform3DReticle_.translation_.y = posNear.y + mouseDirection.y * kDistanceTestObject;
@@ -311,13 +316,24 @@ Vector3 Player::GetWorldPosition() {
 
 void Player::SetParent(const WorldTransform* parent)
 { 
+
 	worldtransform_.parent_ = parent; 
+
 }
 
-void Player::Draw(ViewProjection& viewprojection) {
+void Player::Draw(ViewProjection& viewprojection) 
+{
+	
+	if (isDead_ == false)
+	{
 
-	 model_->Draw(worldtransform_, viewprojection, textureHandle_);
+		model_->Draw(worldtransform_, viewprojection, textureHandle_);
 
+	}
+	
+
+	 
+	
 	 // 弾描画
 	 for (PlayerBullet* bullet : bullets_)
 	 {
@@ -325,11 +341,14 @@ void Player::Draw(ViewProjection& viewprojection) {
 
 	 }
 	 
+	 
+
 //	 model_->Draw(worldTransform3DReticle_, viewprojection);
 
 	 
 
 }
+
 
 void Player::DrawUI() { sprite2DReticle_->Draw(); }
  

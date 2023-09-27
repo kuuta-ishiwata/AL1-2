@@ -22,7 +22,7 @@ void Enemy::Initialize(Model* model, uint32_t enemytextureHandle, Vector3 Positi
 
 	worldtransform_.Initialize();
 
-	worldtransform_.translation_ = {10.0f, 10.0f, 50.0f};
+	worldtransform_.translation_ = {10.0f, 10.0f, 40.0f};
 
 	worldtransform_.translation_ = Position;
 
@@ -42,7 +42,8 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void Enemy::OnCollision() {}
+void Enemy::OnCollision() 
+{ isdead_ = true; }
 
 void Enemy::Approach() {
 
@@ -55,8 +56,7 @@ void Enemy::Fire(Vector3& position) {
 	assert(player_);
 
 	// 弾速度
-	const float kenemybulletspeed = 0.5f;
-
+	const float kenemybulletspeed = 0.25f;
 	Vector3 enemyvelocity(kenemybulletspeed, kenemybulletspeed, kenemybulletspeed);
 
 	Vector3 playerPos = player_->GetWorldPosition();
@@ -119,11 +119,14 @@ void Enemy::Update() {
 		worldtransform_.translation_.z -= kenemyspeed;
 
 		// 規定の位置に到達したら離脱
-		/*
-		if (worldtransform_.translation_.z < 0.0f) {
-			phase_ = Phase::Leave;
+		
+		if (worldtransform_.translation_.z < -0.0f) 
+		{
+			worldtransform_.translation_.z = 0;
+
+
 		}
-		*/
+		
 		if (caunt <= 0) {
 
 			// 敵攻撃
@@ -131,6 +134,7 @@ void Enemy::Update() {
 
 			// 発射タイマーを初期化
 			caunt = kFireInverval;
+
 		}
 
 		break;
@@ -163,8 +167,11 @@ void Enemy::Update() {
 
 void Enemy::Draw(ViewProjection& enemyviewprojection) {
 
-	model_->Draw(worldtransform_, enemyviewprojection, enemytextureHandle_);
 
+	//if (isdead_ == false)
+	//{
+		model_->Draw(worldtransform_, enemyviewprojection, enemytextureHandle_);
+	//}
 
 	// 敵弾描画
 	//for (EnemyBullet* enemybullet : enemybullets) {

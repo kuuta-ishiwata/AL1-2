@@ -11,6 +11,8 @@
 #include "player.h"
 #include <cassert>
 #include <fstream>
+#include "Title.h"
+#include "Scene.h"
 
 GameScene::GameScene() {}
 
@@ -39,9 +41,17 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("ga.png");
 	enemytextureHandle_ = TextureManager::Load("white1x1.png");
 	Skydomemodel_ = Model::CreateFromOBJ("skydome", true);
+
+	
+
+		
 	// レティクルのテクスチャ
 	  TextureManager::Load("aim.png");
 
+
+	  //TextureManager::Load("clear.png");
+	  //TextureManager::Load("gameover.png");
+	  //TextureManager::Load("start.png");
 
 	Vector3 radian{0, 0, 0};
 
@@ -101,6 +111,7 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
 	
+	
 
 }
 
@@ -113,6 +124,8 @@ void GameScene::Update() {
 	}
 
 #endif //
+
+
 
 	// デバッグ
 	if (isDebugCameraActive_) {
@@ -132,6 +145,7 @@ void GameScene::Update() {
 		viewProjection_.matView = RailCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = RailCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
+
 
 	}
 
@@ -164,7 +178,6 @@ void GameScene::Update() {
 	    viewProjection_.matProjection = RailCamera_->GetViewProjection().matProjection;
 	    viewProjection_.TransferMatrix();
 
-
 	}*/
 
 	// Vector3 positionReticle = 3Dレティクルワールド行列からワールド座標を取得;
@@ -177,6 +190,20 @@ void GameScene::Update() {
 	
 	//ワールドスクリーン座標変換（ここで3Dから2Dになる）
 	//
+
+	player_->Update(viewProjection_);
+
+	//シーン切り替え
+
+	//	スクリーン切り替え
+
+	if (input_->PushKey(DIK_P)) 
+	{
+
+		isSceneEndGamePlay = true;
+		isSceneEnd = false;
+
+	}
 
 }
 
@@ -192,12 +219,16 @@ void GameScene::Draw(){
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
+	
+	   
+	
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
 
+	
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画
@@ -211,12 +242,13 @@ void GameScene::Draw(){
 
 	skymodel_->Draw(viewProjection_);
 
+	
+
 	player_->Draw(viewProjection_);
 
 	enemy_->Draw(viewProjection_);
 
 	
-
 
 
 	EnemyObjDraw();
@@ -242,14 +274,17 @@ void GameScene::Draw(){
 	//  スプライト描画後処理
 	Sprite::PostDraw();
 
+
 	
 
-#pragma endregion
 
 }
 
+
+
 void GameScene::AddEnemyBullet(EnemyBullet* enemybullet) 
 {
+
 
 	// リスト登録
 	enemybullets_.push_back(enemybullet);
@@ -262,15 +297,21 @@ void GameScene::CheckAllCollisions() {
 
 	Vector3 posA, posB;
 
+	
+
 	// 自弾リストの取得
 	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	
 	//// 敵弾リストの取得
-	// const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+	// const std::list<EnemyBullet*>& enemyBullets = enemy_->Get();
+
+
 
 #pragma region // 自キャラ敵弾当たり判定
 
 	// 自キャラ座標
 	posA = player_->GetWorldPosition();
+	
 
 	// 自キャラの敵弾当たり判定
 	for (EnemyBullet* bullet : enemybullets_) {
@@ -292,18 +333,24 @@ void GameScene::CheckAllCollisions() {
 
 		Pos = (px * px) + (py * py) + (pz * pz);
 
-		if (Pos <= (radius * radius) + (radius * radius)) {
+		if (Pos <= (radius * radius) + (radius * radius)) 
+		{
 
 			// 自キャラの衝突時コールバックを呼び出す
-			player_->OnCollision();
+		    player_->OnCollision();
+			
 			// 敵弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
-		}
+			
+
+        }
+		
+
 	}
 
 	for (PlayerBullet* bullet : playerBullets) {
 		posB = bullet->GetWorldPosition();
-
+		
 		float radius = 0.6f;
 
 		float px;
@@ -324,8 +371,12 @@ void GameScene::CheckAllCollisions() {
 			enemy_->OnCollision();
 			// 敵弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
+			//isDead_ = true;
+
 		}
 	}
+
+
 }
 
 
@@ -347,16 +398,17 @@ void GameScene::EnemySpawn(Vector3& Position) {
 
 	enemies_.push_back(enemy);
 
-	
+   
 }
 
 void GameScene::EnemyObjUpdate()
 {
 
-	for (Enemy* enemy : enemies_) {
-		enemy->Update();
-	}
-
+	
+		for (Enemy* enemy : enemies_) {
+			enemy->Update();
+		}
+	
 	enemies_.remove_if([](Enemy* enemy_) {
 		if (enemy_->IsDead()) {
 			delete enemy_;
@@ -369,7 +421,9 @@ void GameScene::EnemyObjUpdate()
 	{
 
 		enemybullet->Update();
+
 	}
+
 
 	// デスフラグの立った弾を削除
 	enemybullets_.remove_if([](EnemyBullet* enemybullet) {
@@ -379,23 +433,29 @@ void GameScene::EnemyObjUpdate()
 
 		}
 		return false;
+
 	});
 
 }
 
 void GameScene::EnemyObjDraw() {
 
-	for (Enemy* enemy : enemies_) {
-		enemy->Draw(viewProjection_);
-	}
 
+
+		for (Enemy* enemy : enemies_) {
+			enemy->Draw(viewProjection_);
+		}
 	
-	// 敵弾描画
-	for (EnemyBullet* enemybullet : enemybullets_) 
-	{
-		enemybullet->Draw(viewProjection_);
-	}
+	        
+	     // 敵弾描画
 
+		for (EnemyBullet* enemybullet : enemybullets_) 
+	     {
+
+	     	enemybullet->Draw(viewProjection_);
+
+	     }
+	         
 }
 
 void GameScene::LoadEnemyPopData() {

@@ -112,7 +112,9 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
-    <ClCompile Include="gameScene.cpp" />
+    <ClCompile Include="GameClear.cpp" />
+    <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MATHEX.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -147,7 +149,10 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBullet.h" />
-    <ClInclude Include="gameScene.h" />
+    <ClInclude Include="GameClear.h" />
+    <ClInclude Include="GameOver.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="MATHEX.h" />
     <ClInclude Include="math\Matrix4x4.h" />

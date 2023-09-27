@@ -48,10 +48,10 @@ void RailCamera::Update()
 	worldtransform_.UpdateMatrix();
 	
 
-	ImGui::Begin("RailCamera");
-	ImGui::SliderFloat3("translate", &worldtransform_.translation_.x, -50, 50.0f);
-	ImGui::SliderFloat3("rotate", &worldtransform_.rotation_.x, -10.0f, 10.0f);
-	ImGui::End();
+	//ImGui::Begin("RailCamera");
+	//ImGui::SliderFloat3("translate", &worldtransform_.translation_.x, -50, 50.0f);
+	//ImGui::SliderFloat3("rotate", &worldtransform_.rotation_.x, -10.0f, 10.0f);
+	//ImGui::End();
 	
 
 }

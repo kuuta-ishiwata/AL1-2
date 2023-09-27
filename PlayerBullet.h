@@ -47,6 +47,9 @@ public:
 	// 衝突を検出したら呼び出される関数
 	void OnCollision();
 
+	void OnColliSion();
+
+
 
 	private:
 		//ワールド変更データ

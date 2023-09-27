@@ -96,9 +96,9 @@ private:
 	Phase phase_ = Phase::Approach;
 	
 	//敵弾
-    EnemyBullet* enemybullet_ = nullptr;
+    //EnemyBullet* enemybullet_ = nullptr;
 
-	//std::list<EnemyBullet*> Enemybullets_;
+	std::list<EnemyBullet*> Enemybullets_;
 
 
 	//発射タイマー
@@ -110,5 +110,7 @@ private:
 	GameScene* gameScene_ = nullptr;
 
 	bool isdead_ = false;
+
+
 };
 
