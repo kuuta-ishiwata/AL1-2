@@ -31,7 +31,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 Position) 
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
-	worldtransform_.translation_ = {20.0f, 1.0f, 0.0f};
+	worldtransform_.translation_ = {0.0f, 0.0f, 0.0f};
 
 	worldtransform_.Initialize();
 	input_ = Input::GetInstance();
@@ -56,11 +56,11 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 Position) 
 
 void Player::Attack(Vector3& position)
 {
-	if (input_->PushKey(DIK_SPACE))
+	if (input_->TriggerKey(DIK_SPACE))
 	{   
 		
 		//弾の速度
-		const float kBulletSpeed = 1.0f;
+		const float kBulletSpeed = 0.2f;
 		Vector3 velocity(0, 0, kBulletSpeed);           
 
 
@@ -86,7 +86,6 @@ void Player::Attack(Vector3& position)
 
 void Player::OnCollision() 
 { 
-	
 
     isDead_ = true;
 
@@ -119,22 +118,22 @@ void Player::Update(ViewProjection viewprojection) {
 	
 	// 押した方向で移動ベクトルを変更
 
-	if (input_->PushKey(DIK_LEFT)) 
+	if (input_->PushKey(DIK_A)) 
 	{
 		move.x -= kCharacterSpeed;
 	}
 
-	else if (input_->PushKey(DIK_RIGHT))
+	else if (input_->PushKey(DIK_D))
 	{
 		move.x += kCharacterSpeed;
 	}
 
 
-	if (input_->PushKey(DIK_UP))
+	if (input_->PushKey(DIK_W))
 	{
 		move.y += kCharacterSpeed;
 	}
-	else if (input_->PushKey(DIK_DOWN))
+	else if (input_->PushKey(DIK_S))
 	{
 		move.y -= kCharacterSpeed;
 	}
@@ -145,10 +144,10 @@ void Player::Update(ViewProjection viewprojection) {
 
 	// 押した方向で移動ベクトルを変更
 
-	if (input_->PushKey(DIK_A)) {
+	if (input_->PushKey(DIK_LEFT)) {
 		worldtransform_.rotation_.y -= kRotspeed;
 	}
-	if (input_->PushKey(DIK_D)) {
+	if (input_->PushKey(DIK_RIGHT)) {
 		worldtransform_.rotation_.y += kRotspeed;
 	}
 
@@ -199,50 +198,6 @@ void Player::Update(ViewProjection viewprojection) {
 
 
 
-
-
-	  //自機のワールド座標ら3Dレティクールのワールド座標を計算
-
-	  //自機から3Dレティクル
-	 
-		//const float kDistancePlayerTo3DReticle = 50.0f;
-
-		//// 時機から3Dレティクルへのオフセット（Z向き）
-		//Vector3 offeset = {0, 0, 1.0f};
-
-		//// 自機にワールド行列の回転を反映
-		//offeset = TransformNomal(offeset, worldtransform_.matWorld_);
-
-		//// ベクトルの長さを整える
-		//offeset = Normalize(offeset);
-
-		//offeset.x *= kDistancePlayerTo3DReticle;
-		//offeset.y *= kDistancePlayerTo3DReticle;
-		//offeset.z *= kDistancePlayerTo3DReticle;
-
-		//// 3Dレティクルの座標を設定
-
-		//worldTransform3DReticle_.translation_.x = offeset.x + GetWorldPosition().x;
-		//worldTransform3DReticle_.translation_.y = offeset.y + GetWorldPosition().y;
-		//worldTransform3DReticle_.translation_.z = offeset.z + GetWorldPosition().z;
-
-
-		//// worldTransform3DReticle_のワールド行列更新と転送
-		//worldTransform3DReticle_.UpdateMatrix();
-	 //   
-		//		
-		//
-		// Vector3 positionReticle = worldTransform3DReticle_.translation_;
-
-
-	 //   Matrix4x4 matViewprojectionviewport =
-	 //       Multiply(viewprojection.matView, Multiply(viewprojection.matProjection, matViewport));
-
-	 //   positionReticle = Transform(positionReticle, matViewprojectionviewport);
-
-	 //   sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
-
-
 		 //マウスカーソル
 		 POINT mousePosition;
 	     // マウス座標（スクリーン座標）を取得
@@ -268,6 +223,7 @@ void Player::Update(ViewProjection viewprojection) {
 
 
 		 //スクリーン座標
+
 	     Vector3 posNear =
 	         Vector3((float)sprite2DReticle_->GetPosition().x, sprite2DReticle_->GetPosition().y, 0);
 
@@ -286,7 +242,7 @@ void Player::Update(ViewProjection viewprojection) {
 
 
 		 //カメラから照準のオブジェクト
-	     const float kDistanceTestObject = 90.0f;
+	     const float kDistanceTestObject = 80.0f;
 
 		 worldTransform3DReticle_.translation_.x = posNear.x + mouseDirection.x * kDistanceTestObject;
 	     worldTransform3DReticle_.translation_.y = posNear.y + mouseDirection.y * kDistanceTestObject;
@@ -324,12 +280,13 @@ void Player::SetParent(const WorldTransform* parent)
 void Player::Draw(ViewProjection& viewprojection) 
 {
 	
-	if (isDead_ == false)
-	{
+
+	//if (isDead_ == false)
+	//{
 
 		model_->Draw(worldtransform_, viewprojection, textureHandle_);
 
-	}
+	//}
 	
 
 	 

@@ -32,26 +32,25 @@ void Title::Initialize()
 
 	Sprite_ = Sprite::Create(Start, {0, 0});
 	
-	GameoverSprite_ = Sprite::Create(end, {0, 0});
+	//GameoverSprite_ = Sprite::Create(end, {0, 0});
 
 }
 
 void Title::Update()
 { 
 
-	if (input_->PushKey(DIK_SPACE)) 
+	if (input_->TriggerKey(DIK_SPACE)) 
 	{
-	
 		isSceneEnd = true;
-		
-
+	
 	}
 
-
-	
 	
 
  }
+
+
+
 
 
 void Title::Draw()
@@ -75,6 +74,9 @@ void Title::Draw()
 	
 
 }
+
+
+void Title::Reset() { isSceneEnd = false; }
 
 
 

@@ -56,7 +56,7 @@ void GameScene::Initialize() {
 	Vector3 radian{0, 0, 0};
 
 	// Vector3 playerPosition{0.0f, 0.0f, 20.0f};
-	Vector3 enemyPosition{0, 10, 0};
+	Vector3 enemyPosition{0, 10, 50};
 
 	// モデル
 	worldtransform_.Initialize();
@@ -197,15 +197,33 @@ void GameScene::Update() {
 
 	//	スクリーン切り替え
 
-	if (input_->PushKey(DIK_P)) 
+	
+
+	//if (isDead_ == true) 
+	//{
+
+		//isSceneEnd = true;
+
+	//}
+	
+
+	if (input_->TriggerKey(DIK_K))
 	{
-
-		isSceneEndGamePlay = true;
-		isSceneEnd = false;
-
+	
+		isSceneEnd2 = true;
 	}
 
+
 }
+
+
+void GameScene::Reset() { isSceneEnd = false; }
+
+void GameScene::Reset2() { isSceneEnd2 = false; }
+
+
+
+
 
 void GameScene::Draw(){
 
@@ -319,7 +337,7 @@ void GameScene::CheckAllCollisions() {
 		// 敵弾の座標
 		posB = bullet->GetWorldPosition();
 
-		float radius = 0.6f;
+		float radius = 1.0f;
 
 		float px;
 		float py;
@@ -332,6 +350,7 @@ void GameScene::CheckAllCollisions() {
 		float Pos;
 
 		Pos = (px * px) + (py * py) + (pz * pz);
+
 
 		if (Pos <= (radius * radius) + (radius * radius)) 
 		{
@@ -342,24 +361,32 @@ void GameScene::CheckAllCollisions() {
 			// 敵弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
 			
+			isDead_ = true;
 
         }
 		
 
 	}
 
+	Vector3 posC, posD;
+	//敵キャラ
+
+	posC = enemy_->GetWorldPosition();
+
+    
+
 	for (PlayerBullet* bullet : playerBullets) {
-		posB = bullet->GetWorldPosition();
+		posD = bullet->GetWorldPosition();
 		
-		float radius = 0.6f;
+		float radius = 1.0f;
 
 		float px;
 		float py;
 		float pz;
 
-		px = posB.x - posA.x;
-		py = posB.y - posA.y;
-		pz = posB.z - posA.z;
+		px = posD.x - posC.x;
+		py = posD.y - posC.y;
+		pz = posD.z - posC.z;
 
 		float Pos;
 
@@ -369,13 +396,47 @@ void GameScene::CheckAllCollisions() {
 
 			// 自キャラの衝突時コールバックを呼び出す
 			enemy_->OnCollision();
+			
 			// 敵弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
-			//isDead_ = true;
+		
 
 		}
 	}
+	Vector3 POSA, POSB;
 
+
+
+	for (PlayerBullet* playerbullet : playerBullets) {
+		POSA = playerbullet->GetWorldPosition();
+
+		for (EnemyBullet* enemybullet : enemybullets_) {
+
+			POSB = enemybullet->GetWorldPosition();
+
+			float radius3 = 1.0f;
+
+			float PX;
+			float PY;
+			float PZ;
+
+			PX = POSA.x - POSB.x;
+			PY = POSA.y - POSB.y;
+			PZ = POSA.z - POSB.z;
+
+			float POS;
+
+			POS = (PX * PX) + (PY * PY) + (PZ * PZ);
+
+			if (POS <= (radius3 + radius3) * (radius3 + radius3)) {
+
+				// 敵玉の衝突時コールバックを呼び出す
+				playerbullet->OnCollision();
+				// 自弾の衝突時コールバックを呼び出す
+				enemybullet->OnCollision();
+			}
+		}
+	}
 
 }
 
@@ -384,7 +445,6 @@ void GameScene::CheckAllCollisions() {
 void GameScene::EnemySpawn(Vector3& Position) {
 
 	Enemy* enemy = new Enemy;
-	
 	
 
 	enemy->Initialize(model_, enemytextureHandle_, enemyPosition);
@@ -398,12 +458,14 @@ void GameScene::EnemySpawn(Vector3& Position) {
 
 	enemies_.push_back(enemy);
 
+
+	
    
 }
 
 void GameScene::EnemyObjUpdate()
 {
-
+	
 	
 		for (Enemy* enemy : enemies_) {
 			enemy->Update();
@@ -415,6 +477,7 @@ void GameScene::EnemyObjUpdate()
 			return true;
 		}
 	});
+
 
 
 	for (EnemyBullet* enemybullet : enemybullets_) 
@@ -435,6 +498,12 @@ void GameScene::EnemyObjUpdate()
 		return false;
 
 	});
+
+
+
+
+
+
 
 }
 

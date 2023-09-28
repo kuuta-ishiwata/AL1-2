@@ -8,7 +8,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "GameOver.h"
-
+#include "player.h"
 GameOver::GameOver() {}
 
 
@@ -36,13 +36,20 @@ void GameOver::Update() {
 
 	
 
-	if (input_->PushKey(DIK_SPACE)) 
+	if (input_->TriggerKey(DIK_SPACE)) 
 	{
 
-		isSceneEndGameOver =  true;
-		isSceneEndGamePlay = false;
+		isSceneEnd =  true;
+		
 
 	}
+
+}
+
+void GameOver::Reset()
+{ 
+	isSceneEnd = false;
+
 
 }
 
@@ -58,3 +65,4 @@ void GameOver::Draw() {
 
 	dxCommom_->ClearDepthBuffer();
 }
+

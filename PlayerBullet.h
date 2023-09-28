@@ -8,22 +8,20 @@
 
 
 
-class PlayerBullet
-{
+class PlayerBullet {
 
-public: 
-	///<summary>
-	///初期化
-	/// </summary>
-	/// <param name= "model">モデル</param>
-	/// <param name = "position">初期化座標</param>
-	
+public:
+	///< summary>
+	/// 初期化
+	///  </summary>
+	///  <param name= "model">モデル</param>
+	///  <param name = "position">初期化座標</param>
+
 	void Initialize(Model* model, const Vector3& position, const Vector3 velocity);
-	
 
-	///<summary>
-	///更新
-	/// </summary>
+	///< summary>
+	/// 更新
+	///  </summary>
 	void Update();
 	// 寿命
 	static const int32_t kLifeTime = 60 * 5;
@@ -35,11 +33,11 @@ public:
 
 	bool IsDead() const { return isDead_; }
 
-	///<summary>
-	//描画
+	///< summary>
+	// 描画
 	///</summary>
-	///<param name="viewProjection">ビュープロジェクション</param>
-	
+	///< param name="viewProjection">ビュープロジェクション</param>
+
 	void Draw(const ViewProjection& viewprojection);
 
 	Vector3 GetWorldPosition();
@@ -47,24 +45,22 @@ public:
 	// 衝突を検出したら呼び出される関数
 	void OnCollision();
 
-	void OnColliSion();
+	
 
-
-
-	private:
-		//ワールド変更データ
+private:
+	// ワールド変更データ
 	WorldTransform worldtransform_;
 	ViewProjection viewProjection_;
-	//モデルのポインタ
+	// モデルのポインタ
 	Model* model_ = nullptr;
 
-	//テクスチャハンドル
+	// テクスチャハンドル
 
 	uint32_t bullettextureHandle_ = 0u;
 	Input* input_ = nullptr;
-	
-	//速度
-	Vector3 velocity_;
+
+	// 速度
+	Vector3 velocity_ = {0, 0, 0.5f};
 
 	
 	

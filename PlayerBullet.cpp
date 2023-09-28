@@ -34,7 +34,7 @@ Vector3 PlayerBullet::GetWorldPosition() {
 }
 void PlayerBullet::OnCollision()
 { 
-	//isDead_ = false;
+	isDead_ = true;
 	 
 }
 

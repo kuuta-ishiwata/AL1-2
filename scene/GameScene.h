@@ -17,6 +17,7 @@
 #include <sstream>
 #include "Scene.h"
 #include "GameOver.h"
+#include "Title.h"
 
 /// <summary>
 /// ゲームシーン
@@ -70,16 +71,32 @@ public: // メンバ関数
 	/// </summary>
 	void UpdateEnemyPopCommands();
 
-	bool IsSceneEnd() { return isSceneEnd; }
-	bool IsSceneEndGamePlay() { return isSceneEndGamePlay; }
-	//bool IsSceneEndGameClear() { return isSceneEndGameClear; }
-	//bool IsSceneEndGameover() { return IsSceneEndGameover; }
 
-	SceneType NextSceneGameplay() { return SceneType::kGamePlay; }
-	//SceneType NextSceneGameClear() { return SceneType::gameclear; }
-	//
-	//SceneType NextSceneGameOver() { return SceneType::gameover; }
-	//SceneType NextSceneGameplay() { return SceneType::kTitle; }
+	void Reset();
+	void Reset2();
+	bool IsSceneEnd() { return isSceneEnd; }
+	bool IsSceneEnd2() { return isSceneEnd2; }
+
+
+	SceneType NextScene() {
+
+		// ゲームクリアとゲームオーバーどっちかに行く可能性があるので
+		// if文で戻り値を変える
+		
+		if (isSceneEnd == true) 
+		{
+			return SceneType::kGameOver;
+		}
+
+
+		if (isSceneEnd2 == true) 
+		{
+
+			return SceneType::kGameClear;
+		}
+
+	}
+	
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -138,7 +155,7 @@ private: // メンバ変数
 	RailCamera* RailCamera_ = nullptr;
 
 	Vector3 playerPosition{0.0f, 0.0f, 20.0f};
-	Vector3 enemyPosition{0.0f, 0.0f, 20.0f};
+	Vector3 enemyPosition{0.0f, 0.0f, 50.0f};
 
 	std::list<EnemyBullet*> enemybullets_;
 	std::list<Enemy*> enemies_;
@@ -153,12 +170,17 @@ private: // メンバ変数
 	int32_t waitTimer = 0;
 
 	bool isSceneEnd = false;
-	//bool isSceneEndGameClear = false;
-	//bool isSceneEndGameOver = false;
-	bool isSceneEndGamePlay = false;
+	bool isSceneEndGameClear = false;
+	bool isSceneEndGameOver = false;
+	
+	bool isSceneEnd2 = false;
 
-	uint32_t end = 0;
 	Sprite* GameoverSprite_ = nullptr;
+
+	
+
+	
+
 };
 
 

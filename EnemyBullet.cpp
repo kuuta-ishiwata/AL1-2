@@ -16,8 +16,8 @@ void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector
 	worldtransform_.Initialize();
 	worldtransform_.translation_ = position;
 	enemybulltvelocity_ = enemybulletvelocity;
-
 	
+
 }
 
 Vector3 EnemyBullet::GetWorldPosition() {

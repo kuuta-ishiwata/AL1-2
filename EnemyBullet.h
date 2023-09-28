@@ -60,7 +60,7 @@ private:
 
 	
 	// 速度
-	Vector3 enemybulltvelocity_;
+	Vector3 enemybulltvelocity_ = {0,0,0.2};
 
 	
 

@@ -48,7 +48,7 @@ public:
 	void Fire(Vector3& position);
 
 	//発射間隔
-	static const int kFireInverval = 30;
+	static const int kFireInverval = 90;
 
 	//接近フェ-ズ初期化
 	void Approach();

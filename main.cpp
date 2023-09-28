@@ -1,19 +1,18 @@
 #include "Audio.h"
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
+#include "GameOver.h"
 #include "GameScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
-#include "TextureManager.h"
-#include "WinApp.h"
-#include "GameScene.h"
 #include "Scene.h"
+#include "TextureManager.h"
 #include "Title.h"
-#include "GameOver.h"
+#include "WinApp.h"
+#include "GameClear.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-
 
 	WinApp* win = nullptr;
 	DirectXCommon* dxCommon = nullptr;
@@ -22,7 +21,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
-	//GameScene* gameScene = nullptr;
+	// GameScene* gameScene = nullptr;
 
 	ViewProjection viewProjection;
 
@@ -33,8 +32,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
 	dxCommon->Initialize(win);
-	
-
 
 #pragma region 汎用機能初期化
 	// ImGuiの初期化
@@ -66,28 +63,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
 
-	
-	
-
 #pragma endregion
 
 	// ゲームシーンの初期化
-	//gameScene = new GameScene();
-	//gameScene->Initialize();
+	// gameScene = new GameScene();
+	// gameScene->Initialize();
 
 	// タイトルシーンの初期化
 	Title* titleScene = new Title();
-	
+
 	titleScene->Initialize();
 
-	//titleScene->Draw();
 	SceneType sceneNo = SceneType::kTitle;
-	
+
 	GameScene* gameScene = new GameScene();
 	gameScene->Initialize();
-	
+
 	GameOver* gameoverScene = new GameOver();
 	gameoverScene->Initialize();
+
+	GameClear* gameClear = new GameClear();
+	gameClear->Initialize();
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -95,7 +92,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 
-		
 		// ImGui受付開始
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
@@ -106,47 +102,60 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (sceneNo) {
 		case SceneType::kTitle:
 			titleScene->Update();
-			if (titleScene->IsSceneEnd() == true)
+
+			// タイトルシーンが終わったか
+			if (titleScene->IsSceneEnd() == true) 
 			{
-				//次のシーンの値を代入してシーン切り替え
-				sceneNo = gameScene->NextSceneGameplay();
-				
+				// 次のシーンの値を代入してシーン切り替え、titleScene->NextScene()タイトルシーンの次のシーンの値を代入
+				sceneNo = titleScene->NextScene();
+				gameScene->Reset(); //  ゲームシーンの値をリセット(ゲームループ可能にするため
 			}
 			break;
+
+
 		case SceneType::kGamePlay:
 			gameScene->Update();
-			if (gameScene->IsSceneEndGamePlay() == true)
-			{
-				
-				sceneNo = gameoverScene->NextSceneGameOver();
-				
-
+			// タイトルシーン同様、ゲームシーンが終わったか
+			if (gameScene->IsSceneEnd() == true) {
+				// ゲームシーンの次のシーン gameScene->NextScene()
+				sceneNo = gameoverScene->NextScene();
+				gameScene->Reset();
 			}
+
+			if (gameScene->IsSceneEnd2() == true)
+			{
+
+				sceneNo = gameClear->NextScene();
+				gameScene->Reset();
+			}
+				
 			break;
 
-		case SceneType::gameover:
+		case SceneType::kGameOver:
 			gameoverScene->Update();
-			if (gameoverScene->IsSceneEndGameover() == true)
+			if (gameoverScene->IsSceneEnd() == true) 
 			{
-			    
-				sceneNo = titleScene->NextScenekTitle();
-				
+				sceneNo = titleScene->NextScene2();
+				gameoverScene->Reset();
+				gameScene->Reset();
+				titleScene->Reset();
 
 			}
+
 			break;
-	//
-	//    case SceneType::gameclear:
-	//
-	//		titleScene->Update();
-	//		if (titleScene->IsSceneEnd3() == true)
-	//		{
-	//		    sceneNo = titleScene->NextScene();
-	//		}
-	//	   break;
 
-		   
+     	case SceneType::kGameClear:
+			gameClear->Update();
+			if (gameClear->IsSceneEnd() == true)
+			{
+				sceneNo = titleScene->NextScene2();
+				gameClear->Reset();
+				gameScene->Reset2();
+				titleScene->Reset();
+			
+			}
+			break;
 		}
-
 
 		// 軸表示の更新
 		axisIndicator->Update();
@@ -157,25 +166,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->PreDraw();
 		// ゲームシーンの描画
 
-		//gameScene->Draw();
+		// gameScene->Draw();
 
-		switch (sceneNo)
-		{
+		switch (sceneNo) {
 		case SceneType::kTitle:
 			titleScene->Draw();
 			break;
 		case SceneType::kGamePlay:
 			gameScene->Draw();
+
 			break;
 
-		case SceneType::gameover:
+		case SceneType::kGameOver:
 			gameoverScene->Draw();
-		
+
 			break;
-	//	case SceneType::gameclear:
-	//		titleScene->Draw();
-	//
-	//		break;
+				case SceneType::kGameClear:
+					gameClear->Draw();
+			
+					break;
 		}
 
 		// 軸表示の描画

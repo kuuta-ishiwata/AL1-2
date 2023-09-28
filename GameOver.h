@@ -37,11 +37,20 @@ public:
 
 	void Draw();
 
+
+	void Reset();
 	
-	bool IsSceneEndGameover() { return isSceneEndGameOver; }
-	bool IsSceneEndGamePlay() { return isSceneEndGamePlay; }
-	SceneType NextSceneGameOver() { return SceneType::gameover; }
+	bool IsSceneEnd() { return isSceneEnd; }
 	
+	// 次のシーン
+	SceneType NextScene() 
+	{ 
+	
+		return SceneType::kGameOver;
+	
+	}
+	
+	void playerfalse();
 
 private: // メンバ変数
 
@@ -51,11 +60,9 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 
 	
-	bool isSceneEndGameOver = false;
-	bool isSceneEndGamePlay = false;
+	bool isSceneEnd = false;
+//	bool isSceneEnd = false;
 
-	GameOver* titleScene = nullptr;
-	GameOver* sceneNo = nullptr;
 
 	bool isDead = false;
 
@@ -63,7 +70,7 @@ private: // メンバ変数
 
 	uint32_t end = 0;
 
-
+	
 	Sprite* GameoverSprite_ = nullptr;
 
 

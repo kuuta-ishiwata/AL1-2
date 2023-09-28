@@ -22,7 +22,7 @@ void Enemy::Initialize(Model* model, uint32_t enemytextureHandle, Vector3 Positi
 
 	worldtransform_.Initialize();
 
-	worldtransform_.translation_ = {10.0f, 10.0f, 40.0f};
+	worldtransform_.translation_ = {10.0f, 10.0f, 70.0f};
 
 	worldtransform_.translation_ = Position;
 
@@ -56,7 +56,7 @@ void Enemy::Fire(Vector3& position) {
 	assert(player_);
 
 	// 弾速度
-	const float kenemybulletspeed = 0.25f;
+	const float kenemybulletspeed = 0.3f;
 	Vector3 enemyvelocity(kenemybulletspeed, kenemybulletspeed, kenemybulletspeed);
 
 	Vector3 playerPos = player_->GetWorldPosition();
@@ -120,7 +120,7 @@ void Enemy::Update() {
 
 		// 規定の位置に到達したら離脱
 		
-		if (worldtransform_.translation_.z < -0.0f) 
+		if (worldtransform_.translation_.z < 0.0f) 
 		{
 			worldtransform_.translation_.z = 0;
 

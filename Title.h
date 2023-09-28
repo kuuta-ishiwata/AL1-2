@@ -47,9 +47,13 @@ public:
 
 
 	bool IsSceneEnd() { return isSceneEnd; }
+	
 
-	SceneType NextScenekTitle() { return SceneType::kTitle; }
-
+	SceneType NextScene() { return SceneType::kGamePlay; }
+	SceneType NextScene2() { return SceneType::kTitle; }
+	
+	
+	void Reset();
 
 private: //ƒƒ“ƒo•Ï”
 
@@ -61,7 +65,8 @@ private: //ƒƒ“ƒo•Ï”
 	Audio* audio_ = nullptr;
 
 
-	bool isSceneEnd = false;
+	  bool isSceneEnd = false;
+	bool isSceneEnd2 = false;
 	//bool isSceneEndGamePlay = false;
 	
 
@@ -80,5 +85,8 @@ private: //ƒƒ“ƒo•Ï”
 	Sprite* Sprite_ = nullptr;
 	Sprite* GameoverSprite_ = nullptr;
 
+
+
+	
 };
 
