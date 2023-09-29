@@ -48,19 +48,22 @@ void EnemyBullet::Update()
 
 }
 
+
+
 void EnemyBullet::OnCollision()
 {
 
 	isDead_ = true;
-
 
 ;}
 
 void EnemyBullet::Draw(const ViewProjection& enemyviewprojection)
 {
 
-	
-		 model_->Draw(worldtransform_, enemyviewprojection, enemybullettextureHandle_);
+	if (isDead_ == false) 
+	   {
+		model_->Draw(worldtransform_, enemyviewprojection, enemybullettextureHandle_);
 
+       }
 
 }

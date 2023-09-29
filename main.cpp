@@ -85,6 +85,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	GameClear* gameClear = new GameClear();
 	gameClear->Initialize();
 
+	//Player* playerReset = new Player();
+	
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -97,18 +100,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 入力関連の毎フレーム処理
 		input->Update();
 		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
+		//gameScene->Update();
 
 		switch (sceneNo) {
 		case SceneType::kTitle:
 			titleScene->Update();
-
 			// タイトルシーンが終わったか
 			if (titleScene->IsSceneEnd() == true) 
 			{
 				// 次のシーンの値を代入してシーン切り替え、titleScene->NextScene()タイトルシーンの次のシーンの値を代入
 				sceneNo = titleScene->NextScene();
 				gameScene->Reset(); //  ゲームシーンの値をリセット(ゲームループ可能にするため
+
 			}
 			break;
 
@@ -120,6 +123,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				// ゲームシーンの次のシーン gameScene->NextScene()
 				sceneNo = gameoverScene->NextScene();
 				gameScene->Reset();
+				gameScene->Reset2();
+			
+
 			}
 
 			if (gameScene->IsSceneEnd2() == true)
@@ -127,6 +133,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 				sceneNo = gameClear->NextScene();
 				gameScene->Reset();
+				gameScene->Reset2();
 			}
 				
 			break;
@@ -135,15 +142,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			gameoverScene->Update();
 			if (gameoverScene->IsSceneEnd() == true) 
 			{
+
+
 				sceneNo = titleScene->NextScene2();
 				gameoverScene->Reset();
 				gameScene->Reset();
+				gameScene->Reset2();
 				titleScene->Reset();
-
+			    
+			
 			}
 
 			break;
-
      	case SceneType::kGameClear:
 			gameClear->Update();
 			if (gameClear->IsSceneEnd() == true)
@@ -152,6 +162,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				gameClear->Reset();
 				gameScene->Reset2();
 				titleScene->Reset();
+				
 			
 			}
 			break;
@@ -171,18 +182,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (sceneNo) {
 		case SceneType::kTitle:
 			titleScene->Draw();
+		
 			break;
 		case SceneType::kGamePlay:
 			gameScene->Draw();
-
+			
 			break;
 
 		case SceneType::kGameOver:
 			gameoverScene->Draw();
+			
 
 			break;
-				case SceneType::kGameClear:
-					gameClear->Draw();
+	     case SceneType::kGameClear:
+			gameClear->Draw();
 			
 					break;
 		}

@@ -72,6 +72,10 @@ public: // メンバ関数
 	void UpdateEnemyPopCommands();
 
 
+	void Restart();
+	
+
+
 	void Reset();
 	void Reset2();
 	bool IsSceneEnd() { return isSceneEnd; }
@@ -85,7 +89,9 @@ public: // メンバ関数
 		
 		if (isSceneEnd == true) 
 		{
+
 			return SceneType::kGameOver;
+		
 		}
 
 
@@ -93,10 +99,13 @@ public: // メンバ関数
 		{
 
 			return SceneType::kGameClear;
+
 		}
 
 	}
-	
+	void EnemySpawn();
+	void EnemyObjUpdate();
+	void EnemyObjDraw();
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -104,9 +113,7 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	Sprite* sprite_ = nullptr;
 
-	void EnemySpawn(Vector3& Position);
-	void EnemyObjUpdate();
-	void EnemyObjDraw();
+	
 
 	// スプライト
 	uint32_t textureHandle_ = 0;
@@ -120,8 +127,11 @@ private: // メンバ変数
 	Player* PLAYER_ = nullptr;
 	WorldTransform worldtransform_;
 
+
+
 	// enemy
 	Enemy* enemy_ = nullptr;
+	EnemyBullet* enemybulles_ = nullptr;
 	uint32_t enemytextureHandle_ = 0;
 	uint32_t enemybullettectureHandle_ = 0;
 
@@ -133,6 +143,7 @@ private: // メンバ変数
 	bool isRailCamera_ = true;
 
 	bool isDead_ = false;
+	bool isDead2_ = false;
 
 	uint32_t* modelCube_ = nullptr;
 
@@ -154,11 +165,13 @@ private: // メンバ変数
 
 	RailCamera* RailCamera_ = nullptr;
 
-	Vector3 playerPosition{0.0f, 0.0f, 20.0f};
-	Vector3 enemyPosition{0.0f, 0.0f, 50.0f};
+	Vector3 playerPosition{0.0f, 0.0f, 10.0f};
+	Vector3 enemyPosition{0.0f, 0.0f, 40.0f};
 
 	std::list<EnemyBullet*> enemybullets_;
 	std::list<Enemy*> enemies_;
+
+	
 
 	// 敵発生コマンド
 	std::stringstream enemyPopCommands;
@@ -177,8 +190,12 @@ private: // メンバ変数
 
 	Sprite* GameoverSprite_ = nullptr;
 
+    int count = 0;
+	int count2 = 0;
 	
+	Player* Restartplayer = nullptr;
 
+	
 	
 
 };

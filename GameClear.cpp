@@ -1,4 +1,4 @@
-#include "DirectXCommon.h"
+﻿#include "DirectXCommon.h"
 #include "GameScene.h"
 #include "Input.h"
 #include "Model.h"
@@ -17,7 +17,8 @@ GameClear::GameClear() {
 
 
 
-GameClear::~GameClear() {
+GameClear::~GameClear() 
+{
 
 	delete GameClearSprite_;
 	

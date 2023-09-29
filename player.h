@@ -39,7 +39,7 @@ public:
 	/// 攻撃
 	/// </summary>
 
-	void Attack(Vector3& position);
+	void Attack();
 
 	Vector3 GetWorldPosition();
 
@@ -56,6 +56,7 @@ public:
 
 	void DrawUI();
 
+	void Restart();
 	
 
 private:

@@ -21,8 +21,8 @@ void Enemy::Initialize(Model* model, uint32_t enemytextureHandle, Vector3 Positi
 	enemytextureHandle_ = enemytextureHandle;
 
 	worldtransform_.Initialize();
-
-	worldtransform_.translation_ = {10.0f, 10.0f, 70.0f};
+	 
+	worldtransform_.translation_ = {10.0f, 10.0f, 10.0f};
 
 	worldtransform_.translation_ = Position;
 
@@ -40,15 +40,18 @@ Vector3 Enemy::GetWorldPosition() {
 	worldPos.z = worldtransform_.matWorld_.m[3][2];
 
 	return worldPos;
+	
 }
 
 void Enemy::OnCollision() 
-{ isdead_ = true; }
+{ isdead_ =  true; }
+
+
 
 void Enemy::Approach() {
 
 	// 発射タイマーを初期化
-	caunt = kFireInverval;
+	count = kFireInverval;
 }
 
 void Enemy::Fire(Vector3& position) {
@@ -113,7 +116,7 @@ void Enemy::Update() {
 
 	case Phase::Approach:
 	default:
-		caunt--;
+		count--;
 
 		// 移動（ベクトル加算）
 		worldtransform_.translation_.z -= kenemyspeed;
@@ -123,17 +126,17 @@ void Enemy::Update() {
 		if (worldtransform_.translation_.z < 0.0f) 
 		{
 			worldtransform_.translation_.z = 0;
-
-
+		
+		
 		}
 		
-		if (caunt <= 0) {
+		if (count <= 0) {
 
 			// 敵攻撃
 			Fire(worldtransform_.translation_);
 
 			// 発射タイマーを初期化
-			caunt = kFireInverval;
+			count = kFireInverval;
 
 		}
 
@@ -168,13 +171,14 @@ void Enemy::Update() {
 void Enemy::Draw(ViewProjection& enemyviewprojection) {
 
 
-	//if (isdead_ == false)
-	//{
+	if (isdead_ == false)
+	{
 		model_->Draw(worldtransform_, enemyviewprojection, enemytextureHandle_);
-	//}
+	}
 
 	// 敵弾描画
-	//for (EnemyBullet* enemybullet : enemybullets) {
+	//for(EnemyBullet* enemybullet : enemybullets) {
 	//	enemybullet->Draw(enemyviewprojection);
 	//}
+
 }

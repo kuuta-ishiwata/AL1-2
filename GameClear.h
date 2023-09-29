@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Audio.h"
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -17,17 +17,17 @@ public:
 	~GameClear();
 
 	///< summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	///< summary>
 	void Initialize();
 
 	//////<summary>
-	/// –ˆƒtƒŒ[ƒ€
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ 
 	///< summary>
 	void Update();
 
 	///< summary>
-	/// •`‰æ
+	/// æç”»
 	///< summary>
 
 	void Draw();

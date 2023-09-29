@@ -35,12 +35,12 @@ public:
 	
 	Vector3 GetWorldPosition();
 
-
+	
 
 
 private:
 
-
+	
 	// 寿命
 	static const int32_t kLifeTime = 60 * 5;
 
@@ -60,7 +60,7 @@ private:
 
 	
 	// 速度
-	Vector3 enemybulltvelocity_ = {0,0,0.2};
+	Vector3 enemybulltvelocity_ = {0.0f,0.0f,0.2f};
 
 	
 

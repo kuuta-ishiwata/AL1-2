@@ -4,7 +4,7 @@
 #include "RailCamera.h"
  
 
-void RailCamera::Initialize(Vector3 position, Vector3 radian)
+void RailCamera::Initialize(Vector3 position)
 {
 
 	//assert(model);
@@ -15,13 +15,7 @@ void RailCamera::Initialize(Vector3 position, Vector3 radian)
 	
 	//ワ－ルドトランスフォームの初期設定
 	
-
-	worldtransform_.rotation_.x;
-	worldtransform_.rotation_.y;
-	worldtransform_.rotation_.z;
-	worldtransform_.translation_.x;
-	worldtransform_.translation_.y;
-	worldtransform_.translation_.z= -50;
+	worldtransform_.translation_ = position;
 	
 	
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;

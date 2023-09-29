@@ -59,7 +59,7 @@ public:
 
 	//衝突を検出したら呼び出される関数
 	void OnCollision();
-
+	void OnCollision2();
 	//const std::list<EnemyBullet*>& EnemyGetBullets() const { return Enemybullets_; }
 
 	// 弾リスト取得
@@ -96,13 +96,12 @@ private:
 	Phase phase_ = Phase::Approach;
 	
 	//敵弾
-    //EnemyBullet* enemybullet_ = nullptr;
-
+   
 	std::list<EnemyBullet*> Enemybullets_;
 
 
 	//発射タイマー
-	int32_t caunt = 0;
+	int32_t count = 0;
 
 	Player* player_ = nullptr;
 
@@ -110,7 +109,7 @@ private:
 	GameScene* gameScene_ = nullptr;
 
 	bool isdead_ = false;
-
+	bool isdead2_ = false;
 
 };
 

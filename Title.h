@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"Audio.h"
 #include"DirectXCommon.h"
 #include"Input.h"
@@ -14,30 +14,30 @@ class Title {
 public:
 	
 	///<summary>
-	///ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	///ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	///<summary>
 	Title();
 
 
 	///< summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	///< summary>
 	~Title();
 
 
 	///< summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	///< summary>
 	void Initialize();
 
 	//////<summary>
-	/// –ˆƒtƒŒ[ƒ€
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ 
 	///< summary>
 	void Update();
 
 
 	///< summary>
-	/// •`‰æ
+	/// æç”»
 	///< summary>
 	
 	void Draw();
@@ -55,7 +55,7 @@ public:
 	
 	void Reset();
 
-private: //ƒƒ“ƒo•Ï”
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
 
 
 	DirectXCommon* dxCommom_ = nullptr;

@@ -15,7 +15,7 @@ public:
 	///< summary>
 	/// 初期化
 	///</summary>
-	void Initialize(Vector3 position, Vector3 radian);
+	void Initialize(Vector3 position);
 
 	///< summary>
 	/// 更新

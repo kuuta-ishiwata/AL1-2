@@ -1,4 +1,4 @@
-#include "DirectXCommon.h"
+﻿#include "DirectXCommon.h"
 #include "GameScene.h"
 #include "Input.h"
 #include "Model.h"
@@ -38,10 +38,7 @@ void GameOver::Update() {
 
 	if (input_->TriggerKey(DIK_SPACE)) 
 	{
-
 		isSceneEnd =  true;
-		
-
 	}
 
 }
@@ -49,9 +46,9 @@ void GameOver::Update() {
 void GameOver::Reset()
 { 
 	isSceneEnd = false;
-
-
+	
 }
+
 
 void GameOver::Draw() {
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Audio.h"
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -12,27 +12,27 @@
     class GameOver {
 public:
 	///< summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	///< summary>
 	GameOver();
 
 	///< summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	///< summary>
 	~GameOver();
 
 	///< summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	///< summary>
 	void Initialize();
 
 	//////<summary>
-	/// –ˆƒtƒŒ[ƒ€
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ 
 	///< summary>
 	void Update();
 
 	///< summary>
-	/// •`‰æ
+	/// æç”»
 	///< summary>
 
 	void Draw();
@@ -42,7 +42,7 @@ public:
 	
 	bool IsSceneEnd() { return isSceneEnd; }
 	
-	// Ÿ‚ÌƒV[ƒ“
+	// æ¬¡ã®ã‚·ãƒ¼ãƒ³
 	SceneType NextScene() 
 	{ 
 	
@@ -52,7 +52,7 @@ public:
 	
 	void playerfalse();
 
-private: // ƒƒ“ƒo•Ï”
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 
 	DirectXCommon* dxCommom_ = nullptr;
 
@@ -73,5 +73,6 @@ private: // ƒƒ“ƒo•Ï”
 	
 	Sprite* GameoverSprite_ = nullptr;
 
+	
 
 };

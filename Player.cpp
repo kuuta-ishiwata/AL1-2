@@ -29,11 +29,13 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 Position) 
 	worldtransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 
 	// x,y,z方向のスケーリングを設定
+	worldtransform_.Initialize();
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
-	worldtransform_.translation_ = {0.0f, 0.0f, 0.0f};
+	worldtransform_.translation_ = Position;
 
-	worldtransform_.Initialize();
+
+	worldtransform_.UpdateMatrix();
 	input_ = Input::GetInstance();
 
 
@@ -54,7 +56,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 Position) 
 
 
 
-void Player::Attack(Vector3& position)
+void Player::Attack()
 {
 	if (input_->TriggerKey(DIK_SPACE))
 	{   
@@ -76,7 +78,7 @@ void Player::Attack(Vector3& position)
 
 		// 弾を生成し初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, position, velocity);
+		newBullet->Initialize(model_, GetWorldPosition(), velocity);
 
 		// 弾を登録
 		bullets_.push_back(newBullet);
@@ -87,13 +89,19 @@ void Player::Attack(Vector3& position)
 void Player::OnCollision() 
 { 
 
-    isDead_ = true;
 
+    isDead_ = true;
 
 }
 
+void Player::Restart()
+{ 
+	
+	isDead_ = false;
+	
 
 
+}
 
 
 void Player::Update(ViewProjection viewprojection) {
@@ -154,7 +162,7 @@ void Player::Update(ViewProjection viewprojection) {
 	
 	 // キャラクター攻撃
 
-	Attack(worldtransform_.translation_);
+	Attack();
 
 	for (PlayerBullet* bullet : bullets_) {
 
@@ -208,8 +216,8 @@ void Player::Update(ViewProjection viewprojection) {
 	     ScreenToClient(hwnd, &mousePosition);
 
 	     // マウス座標を2Dレティクルのスプライトに代入する
-	     ReticlePos_.x = mousePosition.x;
-	     ReticlePos_.y = mousePosition.y;
+	      ReticlePos_.x = (float)mousePosition.x;
+	      ReticlePos_.y = (float)mousePosition.y;
 
 	     sprite2DReticle_->SetPosition(ReticlePos_);
 
@@ -277,23 +285,24 @@ void Player::SetParent(const WorldTransform* parent)
 
 }
 
+
+
 void Player::Draw(ViewProjection& viewprojection) 
 {
 	
 
-	//if (isDead_ == false)
-	//{
+	 
+		   model_->Draw(worldtransform_, viewprojection, textureHandle_);
 
-		model_->Draw(worldtransform_, viewprojection, textureHandle_);
 
-	//}
-	
+	 
 
 	 
 	
 	 // 弾描画
 	 for (PlayerBullet* bullet : bullets_)
 	 {
+
 		 bullet->Draw(viewprojection);
 
 	 }
