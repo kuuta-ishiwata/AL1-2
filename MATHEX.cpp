@@ -221,6 +221,7 @@ Matrix4x4 matRotY(float rotation) {
 	result.m[3][3] = 1.0f;
 	return result;
 }
+
 Matrix4x4 matRotZ(float rotation) {
 	Matrix4x4 result;
 
