@@ -11,7 +11,7 @@ GameScene::GameScene()
 {
 	// デストラクタ
 	delete sprite_;
-	delete player_;
+	
 	delete debugCamera_;
 
 }
