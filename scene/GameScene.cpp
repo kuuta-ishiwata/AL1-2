@@ -10,10 +10,7 @@
 GameScene::GameScene() 
 {
 	// デストラクタ
-	delete sprite_;
-	delete player_;
-	delete debugCamera_;
-
+	
 }
 
 
@@ -21,9 +18,7 @@ GameScene::~GameScene()
 {
 
 	// デストラクタ
-	delete sprite_;
-	delete player_;
-	delete model_;
+	
 
 }
 
@@ -37,12 +32,12 @@ void GameScene::Initialize() {
 	//モデル
 	
 	viewProjection_.Initialize();
-	model_ = Model::Create();
+	model_.reset(Model::Create());
 	sprite_ = Sprite::Create(textureHandle_, {350, 20});
 	// 自キャラの編成
-	player_ = new Player();
+	player_ = std::make_unique<Player>();
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_);
+	player_->Initialize(model_.get(), textureHandle_);
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする
@@ -57,8 +52,8 @@ void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
 
-	ImGui::InputFloat3("InputFloat3", inputFloat3);
-	ImGui::SliderFloat3("SliderFloat3", inputFloat3, 0.0f, 1.0f);
+	//ImGui::InputFloat3("InputFloat3", inputFloat3);
+	//ImGui::SliderFloat3("SliderFloat3", inputFloat3, 0.0f, 1.0f);
 	debugCamera_->Update();	
 	
 #ifdef  _DEBUG

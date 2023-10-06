@@ -10,6 +10,7 @@
 #include "WorldTransform.h"
 #include "DebugCamera.h"
 #include "Player.h"
+#include <memory>
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -61,10 +62,10 @@ private: // メンバ変数
 	//スプライト
 	uint32_t textureHandle_ = 0;
 	//モデル
-	Model* model_;
+	std::unique_ptr<Model> model_;
 	//カメラ
 	ViewProjection viewProjection_;
-	Player* player_ = nullptr;
+	std::unique_ptr<Player> player_;
 	WorldTransform worldtransform_;
 
 	/// <summary>

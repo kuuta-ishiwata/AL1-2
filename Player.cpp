@@ -172,17 +172,17 @@ void Player::Update() {
 
 	 worldtransform_.TransferMatrix();
 	 
-	 ImGui::Begin("Debug");
-	 float playerPos[] = {
-	     worldtransform_.translation_.x, worldtransform_.translation_.y,
-	     worldtransform_.translation_.z};
-	
-	 ImGui::SliderFloat3("PlayerPos", playerPos, 1280, 720);
-
-	 worldtransform_.translation_.x = playerPos[0];
-	 worldtransform_.translation_.y = playerPos[1];
-	 worldtransform_.translation_.z = playerPos[2];
-	 ImGui::End();
+	 //ImGui::Begin("Debug");
+	 //float playerPos[] = {
+	 //    worldtransform_.translation_.x, worldtransform_.translation_.y,
+	 //    worldtransform_.translation_.z};
+	 //
+	 //ImGui::SliderFloat3("PlayerPos", playerPos, 1280, 720);
+	 //
+	 //worldtransform_.translation_.x = playerPos[0];
+	 //worldtransform_.translation_.y = playerPos[1];
+	 //worldtransform_.translation_.z = playerPos[2];
+	 //ImGui::End();
 	 
 	 //移動限界座標
 	 const float kMoveLimitX = 30.0f;
