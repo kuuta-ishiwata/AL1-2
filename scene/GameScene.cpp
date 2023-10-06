@@ -19,10 +19,6 @@ GameScene::GameScene()
 GameScene::~GameScene() 
 {
 
-	// デストラクタ
-	delete sprite_;
-	delete player_;
-	delete model_;
 	
 	
 }
@@ -39,14 +35,16 @@ void GameScene::Initialize() {
 	worldtransform_.Initialize();
 
 	viewProjection_.Initialize();
-	model_ = Model::Create();
+	//model_ = Model::Create();
+	model_.reset(Model::Create());
 	//sprite_ = Sprite::Create(textureHandle_, {350, 20});
 	// 自キャラの編成
-	player_ = new Player();
+	//player_ = new Player();
+	player_ = std::make_unique < Player>();
 	
 
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_);
+	player_->Initialize(model_.get(), textureHandle_);
 
 	
 	//デバックカメラの生成
