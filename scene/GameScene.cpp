@@ -6,7 +6,7 @@
 #include "AxisIndicator.h"
 #include "player.h"
 #include "PlayerBullet.h"
-
+#include "Skydome.h"
 
 GameScene::GameScene() 
 {
@@ -26,27 +26,39 @@ GameScene::~GameScene()
 
 void GameScene::Initialize() {
 
+
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("ga.png");
-	//モデル
-	
-	worldtransform_.Initialize();
 
+
+	skydomemodel_.reset(Model::CreateFromOBJ("skydome"));
+
+
+	worldtransform_.Initialize();
 	viewProjection_.Initialize();
-	//model_ = Model::Create();
-	model_.reset(Model::Create());
-	//sprite_ = Sprite::Create(textureHandle_, {350, 20});
-	// 自キャラの編成
-	//player_ = new Player();
-	player_ = std::make_unique < Player>();
 	
+	model_.reset(Model::Create());
+	
+	// 自キャラの編成
+	
+	player_ = std::make_unique <Player>();
+	
+	skydomemodel_ = std::make_unique<Model>();
+	
+	skydome_ = std::make_unique<Skydome>();
 
 	// 自キャラの初期化
 	player_->Initialize(model_.get(), textureHandle_);
 
-	
+
+	skydome_->Initialize(skydomemodel_.get());
+
+
+	viewProjection_.farZ = 1000.0f;
+
+
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 	//軸方向表示の表示を有効にする
@@ -60,6 +72,8 @@ void GameScene::Initialize() {
 void GameScene::Update() { 
 	// 自キャラの更新
 	player_->Update();
+
+	skydome_->Update();
 
 	/*
 	ImGui::InputFloat3("InputFloat3", inputFloat3);
@@ -121,7 +135,11 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
+	skydome_->Draw(viewProjection_);
+
 	player_->Draw(viewProjection_);
+
+	
 
 
 	// 3Dオブジェクト描画後処理

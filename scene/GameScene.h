@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "PlayerBullet.h"
 #include <memory>
+#include "Skydome.h"
 
 /// <summary>
 /// ゲームシーン
@@ -60,9 +61,11 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<Skydome> skydome_;
 	WorldTransform worldtransform_;
-	
-	
+
+	std::unique_ptr<Model> skydomemodel_;
+
 
 	float inputFloat3[3] = {0, 0, 0};
 
