@@ -20,7 +20,6 @@ GameScene::~GameScene()
 {
 
 	
-	
 }
 
 
@@ -32,8 +31,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("ga.png");
 
-
-	skydomemodel_.reset(Model::CreateFromOBJ("skydome"));
+	skydomemodel_.reset(Model::CreateFromOBJ("skydome",true));
 
 
 	worldtransform_.Initialize();
@@ -45,7 +43,8 @@ void GameScene::Initialize() {
 	
 	player_ = std::make_unique <Player>();
 	
-	skydomemodel_ = std::make_unique<Model>();
+
+	//skydomemodel_ = std::make_unique<Model>();
 	
 	skydome_ = std::make_unique<Skydome>();
 
@@ -56,7 +55,7 @@ void GameScene::Initialize() {
 	skydome_->Initialize(skydomemodel_.get());
 
 
-	viewProjection_.farZ = 1000.0f;
+	//viewProjection_.farZ = 1000.0f;
 
 
 	//デバックカメラの生成
@@ -70,10 +69,12 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() { 
+
+	skydome_->Update();
 	// 自キャラの更新
 	player_->Update();
 
-	skydome_->Update();
+	
 
 	/*
 	ImGui::InputFloat3("InputFloat3", inputFloat3);
@@ -135,11 +136,11 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
+	
+	
 	skydome_->Draw(viewProjection_);
-
 	player_->Draw(viewProjection_);
 
-	
 
 
 	// 3Dオブジェクト描画後処理

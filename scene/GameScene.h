@@ -57,14 +57,20 @@ private: // メンバ変数
 	//モデル
 	//Model* model_ = nullptr;
 	std::unique_ptr<Model> model_;
-	//カメラ
-	ViewProjection viewProjection_;
+	std::unique_ptr<Model> skydomemodel_;
+
+	
+
+
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Skydome> skydome_;
 	WorldTransform worldtransform_;
 
-	std::unique_ptr<Model> skydomemodel_;
+	
+	ViewProjection viewProjection_;
+
+	
 
 
 	float inputFloat3[3] = {0, 0, 0};
@@ -76,4 +82,8 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+
+	 
+ 
+	
 };

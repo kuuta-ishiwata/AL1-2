@@ -14,14 +14,16 @@ void Skydome::Initialize(Model* model) {
 	worldtransform_.scale_ = 
 	{
 
-	    80.0f,
-	    80.0f,
+	    40.0f,
+	    40.0f,
 	    80.0f,
 
 	};
 }
 
 void Skydome::Update() { worldtransform_.UpdateMatrix(); }
+
+
 
 void Skydome::Draw(ViewProjection& viewProjection) {
 
