@@ -32,7 +32,7 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("ga.png");
 
 	skydomemodel_.reset(Model::CreateFromOBJ("skydome",true));
-
+	groundmodel_.reset(Model::CreateFromOBJ("ground", true));
 
 	worldtransform_.Initialize();
 	viewProjection_.Initialize();
@@ -48,14 +48,19 @@ void GameScene::Initialize() {
 	
 	skydome_ = std::make_unique<Skydome>();
 
+	ground_ = std::make_unique<Ground>();
+
 	// 自キャラの初期化
 	player_->Initialize(model_.get(), textureHandle_);
 
 
 	skydome_->Initialize(skydomemodel_.get());
 
+	ground_->Initialize(groundmodel_.get());
 
-	//viewProjection_.farZ = 1000.0f;
+	viewProjection_.farZ = 1400.0f;
+	viewProjection_.UpdateMatrix();
+
 
 
 	//デバックカメラの生成
@@ -70,11 +75,12 @@ void GameScene::Initialize() {
 
 void GameScene::Update() { 
 
+
 	skydome_->Update();
 	// 自キャラの更新
 	player_->Update();
 
-	
+	ground_->Update();
 
 	/*
 	ImGui::InputFloat3("InputFloat3", inputFloat3);
@@ -85,15 +91,25 @@ void GameScene::Update() {
 	
 #ifdef  _DEBUG
 
+
 	if (input_->TriggerKey(DIK_M))
 	{
+
 		isDebugCameraActive_ = true;
+
     }
+
+    if (input_->TriggerKey(DIK_K))
+	{
+
+		isDebugCameraActive_ = false;
+
+	}
 
 #endif //  
 
 
-	if (isDebugCameraActive_) 
+	if (isDebugCameraActive_ ) 
 	{
 		debugCamera_->Update();	
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
@@ -139,9 +155,10 @@ void GameScene::Draw() {
 	
 	
 	skydome_->Draw(viewProjection_);
+
 	player_->Draw(viewProjection_);
 
-
+	ground_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

@@ -15,7 +15,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
-	worldtransform_.translation_ = {0.0f, 1.0f, 0.0f};
+	worldtransform_.translation_ = {0.0f, 2.0f, 0.0f};
 
 	worldtransform_.Initialize();
 	input_ = Input::GetInstance();

@@ -13,7 +13,7 @@
 #include "PlayerBullet.h"
 #include <memory>
 #include "Skydome.h"
-
+#include "Ground.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -58,13 +58,16 @@ private: // メンバ変数
 	//Model* model_ = nullptr;
 	std::unique_ptr<Model> model_;
 	std::unique_ptr<Model> skydomemodel_;
-
+	std::unique_ptr<Model> groundmodel_;
 	
 
 
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Skydome> skydome_;
+	std::unique_ptr<Ground> ground_;
+
+
 	WorldTransform worldtransform_;
 
 	

@@ -1,9 +1,10 @@
-﻿#include "Skydome.h"
+﻿#include "Ground.h"
 #include <ImGuiManager.h>
 #include <skydome.h>
 #include "MATHEX.h"
 
-void Skydome::Initialize(Model* model) {
+void Ground::Initialize(Model* model)
+{
 
 	assert(model);
 
@@ -11,22 +12,29 @@ void Skydome::Initialize(Model* model) {
 
 	worldtransform_.Initialize();
 
-	worldtransform_.scale_ = 
-	{
+	worldtransform_.scale_ = {
 
 	    0.5f,
 	    0.5f,
 	    0.5f,
 
 	};
+
+
+
 }
 
-void Skydome::Update() { worldtransform_.UpdateMatrix(); }
+void Ground::Update()
+{
 
+	worldtransform_.UpdateMatrix();
 
+}
 
-void Skydome::Draw(ViewProjection& viewProjection) {
+void Ground::Draw(ViewProjection& viewProjection) {
+
 
 	model_->Draw(worldtransform_, viewProjection);
+
 }
 
