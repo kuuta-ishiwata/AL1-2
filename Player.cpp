@@ -7,6 +7,7 @@
 
 void Player::Initialize(Model* model, uint32_t textureHandle)
 { 
+
 	assert(model);
 	model_ = model;
 	textureHandle_ = textureHandle;
@@ -94,8 +95,32 @@ void Player::Update() {
 		worldtransform_.rotation_.y += kRotspeed;
 	}
 
+	XINPUT_STATE joyState;
+
+	if (Input::GetInstance()->GetJoystickState(0, joyState))
+	{
+
+		//速さ
+		const float speed = 0.3f;
+
+		//移動量
+		Vector3 move =
+		{
+
+			(float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
+			 0.0f,
+			(float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed 
+
+		};
+
+
+	     Normalize(move);
+		 Multiply2(speed,move);
+	     
+
+	}
 	
-	 
+	worldtransform_.UpdateMatrix();
 	 
 	 //移動限界座標
 	 const float kMoveLimitX = 30.0f;

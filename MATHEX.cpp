@@ -52,6 +52,16 @@ Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	return result;
 }
 
+
+Vector3 Multiply2(const float& v1, const Vector3& v2) {
+	Vector3 result{};
+	result.x = v1 * v2.x;
+	result.y = v1 * v2.y;
+	result.z = v1 * v2.z;
+	return result;
+}
+
+
 // スケーリング行列を宣言
 Matrix4x4 matScale(const Vector3 scale) {
 	Matrix4x4 result;
@@ -147,6 +157,24 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	translate_ = matTrans(translate);
 
 	result = Multiply(scale_, Multiply(rot_, translate_));
+
+	return result;
+}
+
+float Length(const Vector3& v)
+{
+	float result;
+	result = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+
+	return result;
+}
+
+
+Vector3 Normalize(const Vector3& v) {
+	Vector3 result;
+	result.x = v.x / Length(v);
+	result.y = v.y / Length(v);
+	result.z = v.z / Length(v);
 
 	return result;
 }

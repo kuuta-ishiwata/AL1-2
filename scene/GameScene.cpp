@@ -65,6 +65,8 @@ void GameScene::Initialize() {
 
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
+	debugCamera_->SetFarZ(1400.0f);
+
 	//軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
