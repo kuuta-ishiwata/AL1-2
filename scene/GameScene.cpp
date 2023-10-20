@@ -215,9 +215,6 @@ void GameScene::Draw(){
 
 	enemy_->Draw(viewProjection_);
 
-	
-
-
 
 	EnemyObjDraw();
 
@@ -318,7 +315,8 @@ void GameScene::CheckAllCollisions() {
 
 		Pos = (px * px) + (py * py) + (pz * pz);
 
-		if (Pos <= (radius * radius) + (radius * radius)) {
+		if (Pos <= (radius * radius) + (radius * radius)) 
+		{
 
 			// 自キャラの衝突時コールバックを呼び出す
 			enemy_->OnCollision();
@@ -333,21 +331,14 @@ void GameScene::CheckAllCollisions() {
 void GameScene::EnemySpawn(Vector3& Position) {
 
 	Enemy* enemy = new Enemy;
-	
-	
 
 	enemy->Initialize(model_, enemytextureHandle_, enemyPosition);
-
-	
-   
 
 	enemy->SetPlayer(player_);
 
 	enemy->SetGameScene(this);
 
 	enemies_.push_back(enemy);
-
-	
 }
 
 void GameScene::EnemyObjUpdate()
@@ -376,21 +367,20 @@ void GameScene::EnemyObjUpdate()
 		if (enemybullet->IsDead()) {
 			delete enemybullet;
 			return true;
-
 		}
 		return false;
 	});
 
 }
 
-void GameScene::EnemyObjDraw() {
+void GameScene::EnemyObjDraw() 
+{
 
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw(viewProjection_);
 	}
-
-	
 	// 敵弾描画
+
 	for (EnemyBullet* enemybullet : enemybullets_) 
 	{
 		enemybullet->Draw(viewProjection_);
@@ -437,6 +427,7 @@ void GameScene::UpdateEnemyPopCommands() {
 		std::string word;
 		// 区切りで行の先頭文字列を取得
 		getline(line_stream, word, ',');
+
 
 		if (word.find("//") == 0) {
 			continue;
