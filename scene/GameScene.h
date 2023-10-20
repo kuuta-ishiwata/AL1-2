@@ -14,6 +14,8 @@
 #include <memory>
 #include "Skydome.h"
 #include "Ground.h"
+#include "RailCamera.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -59,14 +61,15 @@ private: // メンバ変数
 	std::unique_ptr<Model> model_;
 	std::unique_ptr<Model> skydomemodel_;
 	std::unique_ptr<Model> groundmodel_;
-	
+
+	std::unique_ptr<Model> railcamera_;
 
 
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Ground> ground_;
-
+	std::unique_ptr<RailCamera> Railcamera_;
 
 	WorldTransform worldtransform_;
 

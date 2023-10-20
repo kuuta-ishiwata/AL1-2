@@ -104,19 +104,18 @@ void Player::Update() {
 		const float speed = 0.3f;
 
 		//移動量
-		Vector3 move =
+    	 move =
 		{
-
 			(float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
 			 0.0f,
 			(float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed 
-
 		};
 
 
 	     Normalize(move);
 		 Multiply2(speed,move);
 	     
+		worldtransform_.translation_ = Add(worldtransform_.translation_, move);
 
 	}
 	

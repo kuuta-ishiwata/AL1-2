@@ -7,7 +7,8 @@
 #include "player.h"
 #include "PlayerBullet.h"
 #include "Skydome.h"
-
+#include "RailCamera.h"
+#include "FollowCamera.h"
 GameScene::GameScene() 
 {
 	
@@ -50,6 +51,8 @@ void GameScene::Initialize() {
 
 	ground_ = std::make_unique<Ground>();
 
+	Railcamera_ = std::make_unique<RailCamera>();
+
 	// 自キャラの初期化
 	player_->Initialize(model_.get(), textureHandle_);
 
@@ -57,6 +60,9 @@ void GameScene::Initialize() {
 	skydome_->Initialize(skydomemodel_.get());
 
 	ground_->Initialize(groundmodel_.get());
+
+    
+	
 
 	viewProjection_.farZ = 1400.0f;
 	viewProjection_.UpdateMatrix();
