@@ -62,14 +62,17 @@ private: // メンバ変数
 	std::unique_ptr<Model> skydomemodel_;
 	std::unique_ptr<Model> groundmodel_;
 
-	std::unique_ptr<Model> railcamera_;
-
-
+	//std::unique_ptr<Model> railcamera_;
+	
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Ground> ground_;
-	std::unique_ptr<RailCamera> Railcamera_;
+	
+	//std::unique_ptr<FollowCamera> followcamera_;
+
+	RailCamera* railCamera = nullptr;
+	
 
 	WorldTransform worldtransform_;
 

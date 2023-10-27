@@ -1,14 +1,12 @@
 ﻿#pragma once
 #include <Model.h>
 #include <WorldTransform.h>
-#include "FollowCamera.h"
+#include "MATHEX.h"
 
-    ///< summary>
-    /// レールカメラ
-    ///</summary>
 
-class RailCamera {
 
+class RailCamera 
+{
 public:
 	///< summary>
 	/// 初期化
@@ -25,12 +23,10 @@ public:
 	const WorldTransform& GetworldTransform() const { return worldtransform_; }
 
 private:
-
-
 	WorldTransform worldtransform_;
 	Model* model = nullptr;
 
 	ViewProjection viewprojection_;
-
-
 };
+
+

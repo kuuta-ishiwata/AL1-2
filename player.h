@@ -38,9 +38,10 @@ public:
 /// </summary>
 
 	void Attack(Vector3 &position);
-	
+	const WorldTransform& GetworldTransform() const { return worldtransform_; }
 
 private:
+
 	// ワ－ルド変更データ
 	WorldTransform worldtransform_;
 	ViewProjection viewProjection_;
@@ -55,7 +56,7 @@ private:
 
 	//uint32_t* position_ = nullptr;
 
-
+	
 	//弾
 	 PlayerBullet* bullet_ = nullptr;
 	

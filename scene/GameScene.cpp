@@ -7,8 +7,9 @@
 #include "player.h"
 #include "PlayerBullet.h"
 #include "Skydome.h"
-#include "RailCamera.h"
 #include "FollowCamera.h"
+
+
 GameScene::GameScene() 
 {
 	
@@ -24,7 +25,8 @@ GameScene::~GameScene()
 }
 
 
-void GameScene::Initialize() {
+void GameScene::Initialize() 
+{
 
 
 	dxCommon_ = DirectXCommon::GetInstance();
@@ -40,6 +42,7 @@ void GameScene::Initialize() {
 	
 	model_.reset(Model::Create());
 	
+
 	// 自キャラの編成
 	
 	player_ = std::make_unique <Player>();
@@ -51,7 +54,9 @@ void GameScene::Initialize() {
 
 	ground_ = std::make_unique<Ground>();
 
-	Railcamera_ = std::make_unique<RailCamera>();
+	
+
+	//followcamera_ = std::make_unique<FollowCamera>();
 
 	// 自キャラの初期化
 	player_->Initialize(model_.get(), textureHandle_);
@@ -61,12 +66,21 @@ void GameScene::Initialize() {
 
 	ground_->Initialize(groundmodel_.get());
 
-    
-	
+	railCamera = new RailCamera();
 
+
+	//railcamera_->Initialize();
+    
+	//followcamera_->SetTarget(&player_->GetworldTransform());
+
+	
 	viewProjection_.farZ = 1400.0f;
 	viewProjection_.UpdateMatrix();
 
+
+
+	//viewProjection_.matProjection = followcamera_->GetViewProjection().matProjection;
+	//viewProjection_.matView = followcamera_->GetViewProjection().matView;
 
 
 	//デバックカメラの生成
@@ -89,6 +103,9 @@ void GameScene::Update() {
 	player_->Update();
 
 	ground_->Update();
+
+	//followcamera_->Update();
+	//railcamera_->Update();
 
 	/*
 	ImGui::InputFloat3("InputFloat3", inputFloat3);
@@ -124,8 +141,9 @@ void GameScene::Update() {
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		//ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
-	
-	} else {
+	}
+	  else
+	{
 	
 	//ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();

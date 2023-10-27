@@ -1,9 +1,8 @@
-﻿
-#include "RailCamera.h"
-#include "MATHEX.h"
+﻿#include "RailCamera.h"
 #include <ImGuiManager.h>
 #include <assert.h>
 
+    
 void RailCamera::Initialize(Vector3 position, Vector3 radian) {
 
 	// assert(model);
@@ -26,7 +25,10 @@ void RailCamera::Initialize(Vector3 position, Vector3 radian) {
 	viewprojection_.Initialize();
 
 	viewprojection_.farZ = 800.0f;
+
 }
+
+
 
 void RailCamera::Update() {
 

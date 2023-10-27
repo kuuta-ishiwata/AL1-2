@@ -13,6 +13,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	textureHandle_ = textureHandle;
 
 	worldtransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
@@ -26,9 +27,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	{
 		delete bullet;
 	}
+
 }
-
-
 
 
 void Player::Attack(Vector3& position)
