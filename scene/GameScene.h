@@ -15,7 +15,7 @@
 #include "Skydome.h"
 #include "Ground.h"
 #include "RailCamera.h"
-
+#include "FollowCamera.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -48,6 +48,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	const WorldTransform& GetworldTransform() const { return worldtransform_; }
+	ViewProjection GetViewProjection() { return viewProjection_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 
@@ -62,16 +65,16 @@ private: // メンバ変数
 	std::unique_ptr<Model> skydomemodel_;
 	std::unique_ptr<Model> groundmodel_;
 
-	//std::unique_ptr<Model> railcamera_;
+	//std::unique_ptr<RailCamera> railcamera_;
 	
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Ground> ground_;
 	
-	//std::unique_ptr<FollowCamera> followcamera_;
+	std::unique_ptr<FollowCamera> followcamera_;
 
-	RailCamera* railCamera = nullptr;
+
 	
 
 	WorldTransform worldtransform_;

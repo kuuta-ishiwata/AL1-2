@@ -4,6 +4,7 @@
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "AxisIndicator.h"
+#include "DebugCamera.h"
 #include "player.h"
 #include "PlayerBullet.h"
 #include "Skydome.h"
@@ -54,8 +55,9 @@ void GameScene::Initialize()
 
 	ground_ = std::make_unique<Ground>();
 
-	
-
+	//Vector3 radian = {0, 0, 0};
+	//railcamera_ = std::make_unique<RailCamera>();
+	//railcamera_->Initialize();
 	//followcamera_ = std::make_unique<FollowCamera>();
 
 	// 自キャラの初期化
@@ -66,21 +68,18 @@ void GameScene::Initialize()
 
 	ground_->Initialize(groundmodel_.get());
 
-	railCamera = new RailCamera();
-
-
-	//railcamera_->Initialize();
-    
-	//followcamera_->SetTarget(&player_->GetworldTransform());
+	
+	
+	followcamera_->SetTarget(&player_->GetworldTransform());
 
 	
-	viewProjection_.farZ = 1400.0f;
-	viewProjection_.UpdateMatrix();
+	//viewProjection_.farZ = 1400.0f;
+	
 
 
 
-	//viewProjection_.matProjection = followcamera_->GetViewProjection().matProjection;
-	//viewProjection_.matView = followcamera_->GetViewProjection().matView;
+	viewProjection_.matProjection = followcamera_->GetviewProjection().matProjection;
+	viewProjection_.matView = followcamera_->GetviewProjection().matView;
 
 
 	//デバックカメラの生成
@@ -104,7 +103,7 @@ void GameScene::Update() {
 
 	ground_->Update();
 
-	//followcamera_->Update();
+	followcamera_->Update();
 	//railcamera_->Update();
 
 	/*
@@ -112,7 +111,7 @@ void GameScene::Update() {
 	ImGui::SliderFloat3("SliderFloat3", inputFloat3, 0.0f, 1.0f);
 	*/
 
-	
+	viewProjection_.UpdateMatrix();
 	
 #ifdef  _DEBUG
 

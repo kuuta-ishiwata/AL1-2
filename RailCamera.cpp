@@ -7,7 +7,8 @@ void RailCamera::Initialize(Vector3 position, Vector3 radian) {
 
 	// assert(model);
 
-	model = model;
+	worldtransform_.translation_ = position;
+	worldtransform_.translation_ = radian;
 
 	worldtransform_.Initialize();
 

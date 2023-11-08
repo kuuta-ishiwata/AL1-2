@@ -22,6 +22,7 @@ public:
 	ViewProjection GetViewProjection() { return viewprojection_; }
 	const WorldTransform& GetworldTransform() const { return worldtransform_; }
 
+
 private:
 	WorldTransform worldtransform_;
 	Model* model = nullptr;
