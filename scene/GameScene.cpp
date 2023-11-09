@@ -301,6 +301,7 @@ void GameScene::CheckAllCollisions() {
 		}
 	}
 
+
 	for (PlayerBullet* bullet : playerBullets) {
 		posB = bullet->GetWorldPosition();
 
