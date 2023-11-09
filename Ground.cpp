@@ -21,7 +21,6 @@ void Ground::Initialize(Model* model)
 	};
 
 
-
 }
 
 void Ground::Update()
