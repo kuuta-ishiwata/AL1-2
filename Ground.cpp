@@ -12,7 +12,8 @@ void Ground::Initialize(Model* model)
 
 	worldtransform_.Initialize();
 
-	worldtransform_.scale_ = {
+	worldtransform_.scale_ = 
+	{
 
 	    0.5f,
 	    0.5f,

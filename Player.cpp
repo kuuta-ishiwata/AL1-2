@@ -5,55 +5,77 @@
 #include "MATHEX.h"
 
 
-void Player::Initialize(Model* model, uint32_t textureHandle)
-{ 
+//Player::Player() {}
+//Player::~Player() {}
 
-	assert(model);
-	model_ = model;
-	textureHandle_ = textureHandle;
+Vector3 Player::GetWorldPosition() {
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldPos.x = worldtransform_.matWorld_.m[3][0];
+	worldPos.y = worldtransform_.matWorld_.m[3][1];
+	worldPos.z = worldtransform_.matWorld_.m[3][2];
 
-	worldtransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	return worldPos;
+}
+
+
+void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm_, Model* modelR_arm) { 
+
+	//assert(model);
+	//model_ = model;
+	modelFighterBody_ = modelBody;
+	modelFighterhead_ = modelHead;
+	modelFighterL_arm_ = modelL_arm_;
+	modelFighterR_arm_ = modelR_arm;
+	//textureHandle_ = textureHandle;
 
 	// x,y,z方向のスケーリングを設定
 	worldtransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
 	worldtransform_.translation_ = {0.0f, 2.0f, 0.0f};
 
+
+
 	worldtransform_.Initialize();
 	input_ = Input::GetInstance();
 
 	//bulletの解放
-	for (PlayerBullet* bullet : bullets_)
-	{
-		delete bullet;
-	}
+	//for (PlayerBullet* bullet : bullets_)
+	//{
+	//	delete bullet;
+	//}
 
 }
 
 
-void Player::Attack(Vector3& position)
+
+
+void Player::InitializeFloatingGimmick() 
+{ 
+
+   floatingParameter_ = 0.0f;
+
+}
+
+void Player::UpdateFloatingGimmick() 
 {
-	if (input_->PushKey(DIK_SPACE))
-	{   
-		
-		//弾があれば解放
-		/*
-		if (bullet_)
-		{
-			delete bullet_;
-			bullet_ = nullptr;
-		}
-		*/
-		// 弾を生成し初期化
-		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_,position);
 
-		// 弾を登録
-		//bullet_ = newBullet;
-		bullets_.push_back(newBullet);
+  const uint16_t Cycle = 120;
 
-	}
+  const float Step = 2.0f * (float)M_PI / Cycle;
 
+  floatingParameter_ += Step;
+
+  floatingParameter_ = (float)std::fmod(floatingParameter_, 2.0f * M_PI);
+
+  const float Floatingamplitude = 0.5f;
+
+  //浮遊を座標に反映
+  WorldTransformBody.translation_.y = std::sin(floatingParameter_) * Floatingamplitude;
+
+   
+  
 }
 
 
@@ -144,7 +166,8 @@ void Player::Update() {
 
 	 //キャラクター攻撃
 	 
-	 Attack(worldtransform_.translation_);
+	//
+	//  Attack(worldtransform_.translation_);
 
 	 //弾更新
 	 /*
@@ -153,11 +176,12 @@ void Player::Update() {
 		bullet_->Update();
 	 }
 	 */
+	 /*
 	 for (PlayerBullet* bullet : bullets_ ) 
 	 {
 		bullet->Update();
 	 }
-	 
+	 */
 	 //ワールドトランスフォームの更新
 	
 
@@ -180,18 +204,19 @@ void Player::Update() {
 }
 
 
+void Player::Draw(ViewProjection& viewprojection) 
+{
 
-
-void Player::Draw(ViewProjection& viewprojection) {
-
-	 model_->Draw(worldtransform_, viewprojection, textureHandle_);
+	modelFighterBody_->Draw(WorldTransformBody, viewprojection );
+	modelFighterhead_->Draw(WorldTransformHead, viewprojection);
+	modelFighterL_arm_->Draw(WorldTransformL_arm, viewprojection);
+	modelFighterR_arm_->Draw(WorldTransformR_arm, viewprojection);
 
 	 // 弾描画
-	 
-	 for (PlayerBullet* bullet : bullets_)
-	 {
-		bullet->Draw(viewprojection);
-	 }
+	 //for (PlayerBullet* bullet : bullets_)
+	 //{
+	//	bullet->Draw(viewprojection);
+	 //}
 	 
 }
 

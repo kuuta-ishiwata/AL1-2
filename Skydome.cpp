@@ -13,12 +13,12 @@ void Skydome::Initialize(Model* model) {
 
 	worldtransform_.scale_ = 
 	{
-
 	    1.0f,
 	    1.0f,
 	    1.0f,
-
 	};
+	
+	worldtransform_.translation_.z = 10.0f;
 }
 
 void Skydome::Update() { worldtransform_.UpdateMatrix(); }

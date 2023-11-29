@@ -2,7 +2,7 @@
 #include <Model.h>
 #include <WorldTransform.h>
 #include "MATHEX.h"
-
+#include "FollowCamera.h"
 
 
 class RailCamera 
@@ -11,7 +11,7 @@ public:
 	///< summary>
 	/// 初期化
 	///</summary>
-	void Initialize(Vector3 position, Vector3 radian);
+	void Initialize();
 
 	///< summary>
 	/// 更新
@@ -19,8 +19,8 @@ public:
 
 	void Update();
 
-	ViewProjection GetViewProjection() { return viewprojection_; }
-	const WorldTransform& GetworldTransform() const { return worldtransform_; }
+	 const ViewProjection& GetViewProjection() { return viewprojection_; }
+	 const WorldTransform& GetworldTransform()  { return worldtransform_; }
 
 
 private:
@@ -28,6 +28,7 @@ private:
 	Model* model = nullptr;
 
 	ViewProjection viewprojection_;
+
 };
 
 

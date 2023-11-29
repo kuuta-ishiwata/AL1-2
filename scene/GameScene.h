@@ -16,6 +16,8 @@
 #include "Ground.h"
 #include "RailCamera.h"
 #include "FollowCamera.h"
+#include <sstream>
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -48,11 +50,12 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-	const WorldTransform& GetworldTransform() const { return worldtransform_; }
-	ViewProjection GetViewProjection() { return viewProjection_; }
+
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
+	WorldTransform worldtransform_;
+	ViewProjection viewProjection_;
 
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
@@ -65,24 +68,18 @@ private: // メンバ変数
 	std::unique_ptr<Model> skydomemodel_;
 	std::unique_ptr<Model> groundmodel_;
 
-	//std::unique_ptr<RailCamera> railcamera_;
+	//obj読み込み
+	std::unique_ptr<Model> modelFigjhterBody_;
+	std::unique_ptr<Model> modelFighterHead_;
+	std::unique_ptr<Model> modelFighterL_arm_;
+	std::unique_ptr<Model> modelFighterR_arm_;
 	
-	//Player* player_ = nullptr;
+
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Ground> ground_;
 	
 	std::unique_ptr<FollowCamera> followcamera_;
-
-
-	
-
-	WorldTransform worldtransform_;
-
-	
-	ViewProjection viewProjection_;
-
-	
 
 
 	float inputFloat3[3] = {0, 0, 0};
@@ -94,7 +91,10 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
-
+	//ViewProjection model_Body;
+	//ViewProjection model_Head;
+	//ViewProjection model_L_arm;
+	//ViewProjection model_R_arm;
 	 
  
 	
